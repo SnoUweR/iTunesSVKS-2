@@ -18,7 +18,7 @@ namespace iTunesSVKS_2.Networks
 
         void Share(string id, string message);
 
-        Dictionary<int, string> GetFriends();
+        List<Friend> GetFriends();
 
         void Destroy();
 

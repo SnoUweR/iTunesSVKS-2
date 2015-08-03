@@ -37,10 +37,24 @@
             this.songArtistLabel = new System.Windows.Forms.Label();
             this.songNameLabel = new System.Windows.Forms.Label();
             this.lastFMBtn = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.comboBFriends = new System.Windows.Forms.ComboBox();
+            this.changeShareTextBtn = new System.Windows.Forms.Button();
+            this.albumArtCheckBox = new System.Windows.Forms.CheckBox();
+            this.shareButton = new System.Windows.Forms.Button();
+            this.wallSongButton = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.realSongChckBox = new System.Windows.Forms.CheckBox();
+            this.customText = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.setStatusButton = new System.Windows.Forms.Button();
+            this.autoUpdCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -124,11 +138,137 @@
             this.lastFMBtn.Text = "Загрузить с LastFM";
             this.lastFMBtn.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.comboBFriends);
+            this.groupBox4.Controls.Add(this.changeShareTextBtn);
+            this.groupBox4.Controls.Add(this.albumArtCheckBox);
+            this.groupBox4.Controls.Add(this.shareButton);
+            this.groupBox4.Controls.Add(this.wallSongButton);
+            this.groupBox4.Location = new System.Drawing.Point(334, 314);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(174, 155);
+            this.groupBox4.TabIndex = 25;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Поделиться";
+            // 
+            // comboBFriends
+            // 
+            this.comboBFriends.FormattingEnabled = true;
+            this.comboBFriends.Location = new System.Drawing.Point(6, 19);
+            this.comboBFriends.Name = "comboBFriends";
+            this.comboBFriends.Size = new System.Drawing.Size(161, 21);
+            this.comboBFriends.TabIndex = 27;
+            this.comboBFriends.Text = "Выберите друга";
+            // 
+            // changeShareTextBtn
+            // 
+            this.changeShareTextBtn.Location = new System.Drawing.Point(5, 69);
+            this.changeShareTextBtn.Name = "changeShareTextBtn";
+            this.changeShareTextBtn.Size = new System.Drawing.Size(163, 23);
+            this.changeShareTextBtn.TabIndex = 25;
+            this.changeShareTextBtn.Text = "Изменить текст";
+            this.changeShareTextBtn.UseVisualStyleBackColor = true;
+            // 
+            // albumArtCheckBox
+            // 
+            this.albumArtCheckBox.AutoSize = true;
+            this.albumArtCheckBox.Location = new System.Drawing.Point(6, 127);
+            this.albumArtCheckBox.Name = "albumArtCheckBox";
+            this.albumArtCheckBox.Size = new System.Drawing.Size(133, 17);
+            this.albumArtCheckBox.TabIndex = 24;
+            this.albumArtCheckBox.Text = "Прикрепить обложку";
+            this.albumArtCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // shareButton
+            // 
+            this.shareButton.Enabled = false;
+            this.shareButton.Location = new System.Drawing.Point(5, 42);
+            this.shareButton.Name = "shareButton";
+            this.shareButton.Size = new System.Drawing.Size(163, 23);
+            this.shareButton.TabIndex = 20;
+            this.shareButton.Text = "Порекомендовать";
+            this.shareButton.UseVisualStyleBackColor = true;
+            // 
+            // wallSongButton
+            // 
+            this.wallSongButton.Enabled = false;
+            this.wallSongButton.Location = new System.Drawing.Point(5, 98);
+            this.wallSongButton.Name = "wallSongButton";
+            this.wallSongButton.Size = new System.Drawing.Size(163, 23);
+            this.wallSongButton.TabIndex = 21;
+            this.wallSongButton.Text = "Поместить себе на страницу";
+            this.wallSongButton.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.realSongChckBox);
+            this.groupBox2.Controls.Add(this.customText);
+            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.setStatusButton);
+            this.groupBox2.Controls.Add(this.autoUpdCheckBox);
+            this.groupBox2.Location = new System.Drawing.Point(5, 314);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(323, 155);
+            this.groupBox2.TabIndex = 31;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Шаблон";
+            // 
+            // realSongChckBox
+            // 
+            this.realSongChckBox.AutoSize = true;
+            this.realSongChckBox.Location = new System.Drawing.Point(6, 123);
+            this.realSongChckBox.Name = "realSongChckBox";
+            this.realSongChckBox.Size = new System.Drawing.Size(267, 17);
+            this.realSongChckBox.TabIndex = 27;
+            this.realSongChckBox.Text = "Транслировать в статус реальную песню (Beta)";
+            this.realSongChckBox.UseVisualStyleBackColor = true;
+            // 
+            // customText
+            // 
+            this.customText.Location = new System.Drawing.Point(6, 19);
+            this.customText.Multiline = true;
+            this.customText.Name = "customText";
+            this.customText.Size = new System.Drawing.Size(311, 36);
+            this.customText.TabIndex = 26;
+            this.customText.Text = "Сейчас прослушиваю {artist} - {name} via iTunes";
+            this.customText.TextChanged += new System.EventHandler(this.customText_TextChanged);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(6, 61);
+            this.textBox2.Multiline = true;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(311, 33);
+            this.textBox2.TabIndex = 14;
+            // 
+            // setStatusButton
+            // 
+            this.setStatusButton.Location = new System.Drawing.Point(213, 96);
+            this.setStatusButton.Name = "setStatusButton";
+            this.setStatusButton.Size = new System.Drawing.Size(104, 23);
+            this.setStatusButton.TabIndex = 4;
+            this.setStatusButton.Text = "Обновить";
+            this.setStatusButton.UseVisualStyleBackColor = true;
+            // 
+            // autoUpdCheckBox
+            // 
+            this.autoUpdCheckBox.AutoSize = true;
+            this.autoUpdCheckBox.Location = new System.Drawing.Point(6, 100);
+            this.autoUpdCheckBox.Name = "autoUpdCheckBox";
+            this.autoUpdCheckBox.Size = new System.Drawing.Size(104, 17);
+            this.autoUpdCheckBox.TabIndex = 7;
+            this.autoUpdCheckBox.Text = "Автоматически";
+            this.autoUpdCheckBox.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 389);
+            this.ClientSize = new System.Drawing.Size(514, 536);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.toolStrip1);
@@ -139,6 +279,10 @@
             this.groupBox1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -154,6 +298,18 @@
         private System.Windows.Forms.Label songArtistLabel;
         private System.Windows.Forms.Label songNameLabel;
         private System.Windows.Forms.Button lastFMBtn;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ComboBox comboBFriends;
+        private System.Windows.Forms.Button changeShareTextBtn;
+        private System.Windows.Forms.CheckBox albumArtCheckBox;
+        private System.Windows.Forms.Button shareButton;
+        private System.Windows.Forms.Button wallSongButton;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox realSongChckBox;
+        private System.Windows.Forms.TextBox customText;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button setStatusButton;
+        private System.Windows.Forms.CheckBox autoUpdCheckBox;
     }
 }
 

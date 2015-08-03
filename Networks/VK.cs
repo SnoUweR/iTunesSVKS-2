@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ApiCore;
+using ApiCore.Friends;
 using ApiCore.Status;
 
 namespace iTunesSVKS_2.Networks
@@ -13,6 +14,8 @@ namespace iTunesSVKS_2.Networks
         private SessionInfo _sessionInfo;
         private ApiManager _manager;
         private StatusFactory _statusFactory;
+        private FriendsFactory _friendsFactory;
+
 
         /// <summary>
         /// Текст, который будет устанавливаться как статус после закрытия программы
@@ -41,6 +44,7 @@ namespace iTunesSVKS_2.Networks
             {
                 _manager = new ApiManager(_sessionInfo) { Timeout = 10000 };
                 _statusFactory = new StatusFactory(_manager);
+                _friendsFactory = new FriendsFactory(_manager);
                 OnConnected(_sessionInfo.UserId.ToString());
             }
         }
@@ -70,9 +74,17 @@ namespace iTunesSVKS_2.Networks
             throw new NotImplementedException();
         }
 
-        public Dictionary<int, string> GetFriends()
+        public List<Friend> GetFriends()
         {
-            throw new NotImplementedException();
+            List<Friend> tmpList = new  List<Friend>();
+            string[] fields = { "uid", "first_name", "last_name" };
+            List<ApiCore.Friends.Friend> friendsList = _friendsFactory.Get(_sessionInfo.UserId, "nom", null, 0, null, fields);
+
+            foreach (ApiCore.Friends.Friend f in friendsList)
+            {
+                tmpList.Add(new Friend(f.Id.ToString(), String.Format("{0} {1}", f.FirstName, f.LastName)));
+            }
+            return tmpList;
         }
 
         public void Destroy()

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using iTunesSVKS_2.Networks;
 using iTunesSVKS_2.Players;
+using iTunesSVKS_2.TemplateProcessor;
 
 namespace iTunesSVKS_2
 {
@@ -16,16 +17,23 @@ namespace iTunesSVKS_2
         
         INetwork sNet = new VK();
         IPlayer pl = new iTunes();
+        ITemplateProcessor tp = new DefaultProcessor();
+        private Song currentSong;
 
         public Form1()
         {
             InitializeComponent();
-
+            
         }
 
         private void SNetOnConnected(object sender, string username)
         {
-            songNameLabel.Text = sNet.GetStatus();
+            List<Friend> tmpFr = sNet.GetFriends();
+
+            foreach (Friend fr in tmpFr)
+            {
+                comboBFriends.Items.Add(fr);
+            }
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -37,9 +45,18 @@ namespace iTunesSVKS_2
             songNameLabel.Text = pl.GetCurrentSong().Name;
         }
 
+       
+
         private void PlOnSongChanged(object sender, Song newsong)
         {
-            Console.WriteLine("Песня изменилась на {0}", newsong);
+            currentSong = newsong;
+            Console.WriteLine("Песня изменилась на {0}", currentSong);
+            
+        }
+
+        private void customText_TextChanged(object sender, EventArgs e)
+        {
+            textBox2.Text = tp.ProcessTemplate(customText.Text, currentSong);
         }
     }
 }
