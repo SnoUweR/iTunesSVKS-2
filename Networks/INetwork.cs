@@ -19,5 +19,11 @@ namespace iTunesSVKS_2.Networks
         void Share(string id, string message);
 
         Dictionary<int, string> GetFriends();
+
+        void Destroy();
+
+        event ConnectedEventHandler Connected;
     }
+
+     internal delegate void ConnectedEventHandler(object sender, string username);
 }

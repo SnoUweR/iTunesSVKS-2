@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ApiCore;
+using ApiCore.Status;
 
 namespace iTunesSVKS_2.Networks
 {
@@ -11,9 +12,14 @@ namespace iTunesSVKS_2.Networks
         private bool _isLogged;
         private SessionInfo _sessionInfo;
         private ApiManager _manager;
+        private StatusFactory _statusFactory;
 
-        public delegate void ConnectedEventHandler(object sender, string username);
-        public event ConnectedEventHandler Connected;
+        /// <summary>
+        /// Текст, который будет устанавливаться как статус после закрытия программы
+        /// </summary>
+        private string _initialStatus;
+
+
 
 
         public void Auth()
@@ -34,6 +40,7 @@ namespace iTunesSVKS_2.Networks
             else
             {
                 _manager = new ApiManager(_sessionInfo) { Timeout = 10000 };
+                _statusFactory = new StatusFactory(_manager);
                 OnConnected(_sessionInfo.UserId.ToString());
             }
         }
@@ -45,12 +52,12 @@ namespace iTunesSVKS_2.Networks
 
         public string GetStatus()
         {
-            throw new NotImplementedException();
+            return _statusFactory.Get(_sessionInfo.UserId);
         }
 
         public void SetStatus(string status)
         {
-            throw new NotImplementedException();
+            _statusFactory.Set(status);
         }
 
         public void Deauth()
@@ -67,6 +74,13 @@ namespace iTunesSVKS_2.Networks
         {
             throw new NotImplementedException();
         }
+
+        public void Destroy()
+        {
+            throw new NotImplementedException();
+        }
+
+        public event ConnectedEventHandler Connected;
 
         protected virtual void OnConnected(string username)
         {
