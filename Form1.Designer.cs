@@ -237,6 +237,7 @@
             this.shareButton.TabIndex = 20;
             this.shareButton.Text = "Порекомендовать";
             this.shareButton.UseVisualStyleBackColor = true;
+            this.shareButton.Click += new System.EventHandler(this.shareButton_Click);
             // 
             // wallSongButton
             // 

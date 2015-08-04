@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Common\Friend.cs" />
     <Compile Include="Common\Cover.cs" />
+    <Compile Include="LogicManager.cs" />
     <Compile Include="Networks\ICoverFinder.cs" />
     <Compile Include="Networks\ISharer.cs" />
     <Compile Include="Players\ICoverSetter.cs" />

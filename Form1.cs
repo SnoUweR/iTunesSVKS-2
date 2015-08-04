@@ -101,5 +101,10 @@ namespace iTunesSVKS_2
                 }
             }
         }
+
+        private void shareButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
