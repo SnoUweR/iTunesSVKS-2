@@ -28,15 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.albumArtBox = new System.Windows.Forms.PictureBox();
             this.songArtistLabel = new System.Windows.Forms.Label();
             this.songNameLabel = new System.Windows.Forms.Label();
-            this.lastFMBtn = new System.Windows.Forms.Button();
+            this.FindCoverButton = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.comboBFriends = new System.Windows.Forms.ComboBox();
             this.changeShareTextBtn = new System.Windows.Forms.Button();
@@ -49,25 +48,20 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.setStatusButton = new System.Windows.Forms.Button();
             this.autoUpdCheckBox = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.shareBtn = new System.Windows.Forms.Button();
+            this.albumArtBox = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Black;
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(0, 25);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(514, 64);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 22;
-            this.pictureBox1.TabStop = false;
             // 
             // toolStrip1
             // 
@@ -79,10 +73,14 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.shareBtn);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.songArtistLabel);
             this.groupBox1.Controls.Add(this.songNameLabel);
-            this.groupBox1.Controls.Add(this.lastFMBtn);
+            this.groupBox1.Controls.Add(this.FindCoverButton);
             this.groupBox1.Location = new System.Drawing.Point(4, 95);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(504, 213);
@@ -99,18 +97,9 @@
             this.panel1.Size = new System.Drawing.Size(165, 165);
             this.panel1.TabIndex = 31;
             // 
-            // albumArtBox
-            // 
-            this.albumArtBox.Location = new System.Drawing.Point(5, 5);
-            this.albumArtBox.Name = "albumArtBox";
-            this.albumArtBox.Size = new System.Drawing.Size(155, 155);
-            this.albumArtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.albumArtBox.TabIndex = 27;
-            this.albumArtBox.TabStop = false;
-            // 
             // songArtistLabel
             // 
-            this.songArtistLabel.Location = new System.Drawing.Point(10, 145);
+            this.songArtistLabel.Location = new System.Drawing.Point(11, 78);
             this.songArtistLabel.Name = "songArtistLabel";
             this.songArtistLabel.Size = new System.Drawing.Size(313, 48);
             this.songArtistLabel.TabIndex = 30;
@@ -121,22 +110,22 @@
             // 
             this.songNameLabel.AutoEllipsis = true;
             this.songNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.songNameLabel.Location = new System.Drawing.Point(10, 86);
+            this.songNameLabel.Location = new System.Drawing.Point(14, 19);
             this.songNameLabel.Name = "songNameLabel";
             this.songNameLabel.Size = new System.Drawing.Size(307, 59);
             this.songNameLabel.TabIndex = 28;
             this.songNameLabel.Text = "Нет композиции";
             this.songNameLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // lastFMBtn
+            // FindCoverButton
             // 
-            this.lastFMBtn.Enabled = false;
-            this.lastFMBtn.Location = new System.Drawing.Point(335, 184);
-            this.lastFMBtn.Name = "lastFMBtn";
-            this.lastFMBtn.Size = new System.Drawing.Size(165, 23);
-            this.lastFMBtn.TabIndex = 29;
-            this.lastFMBtn.Text = "Загрузить с LastFM";
-            this.lastFMBtn.UseVisualStyleBackColor = true;
+            this.FindCoverButton.Location = new System.Drawing.Point(335, 184);
+            this.FindCoverButton.Name = "FindCoverButton";
+            this.FindCoverButton.Size = new System.Drawing.Size(165, 23);
+            this.FindCoverButton.TabIndex = 29;
+            this.FindCoverButton.Text = "Загрузить с LastFM";
+            this.FindCoverButton.UseVisualStyleBackColor = true;
+            this.FindCoverButton.Click += new System.EventHandler(this.FindCoverButton_Click);
             // 
             // groupBox4
             // 
@@ -262,6 +251,75 @@
             this.autoUpdCheckBox.Text = "Автоматически";
             this.autoUpdCheckBox.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label1.Location = new System.Drawing.Point(8, 115);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(321, 2);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label2.Location = new System.Drawing.Point(8, 150);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(321, 2);
+            this.label2.TabIndex = 33;
+            this.label2.Text = "label2";
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = global::iTunesSVKS_2.Properties.Resources.search32;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.button1.Location = new System.Drawing.Point(51, 117);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(32, 32);
+            this.button1.TabIndex = 34;
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolTip1.SetToolTip(this.button1, "Искать данную песню");
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // shareBtn
+            // 
+            this.shareBtn.BackgroundImage = global::iTunesSVKS_2.Properties.Resources.share32;
+            this.shareBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.shareBtn.FlatAppearance.BorderSize = 0;
+            this.shareBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.shareBtn.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.shareBtn.Location = new System.Drawing.Point(13, 117);
+            this.shareBtn.Name = "shareBtn";
+            this.shareBtn.Size = new System.Drawing.Size(32, 32);
+            this.shareBtn.TabIndex = 32;
+            this.shareBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolTip1.SetToolTip(this.shareBtn, "Поделиться песней с друзьями...");
+            this.shareBtn.UseVisualStyleBackColor = true;
+            // 
+            // albumArtBox
+            // 
+            this.albumArtBox.Location = new System.Drawing.Point(5, 5);
+            this.albumArtBox.Name = "albumArtBox";
+            this.albumArtBox.Size = new System.Drawing.Size(155, 155);
+            this.albumArtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.albumArtBox.TabIndex = 27;
+            this.albumArtBox.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Black;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 25);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(514, 64);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 22;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,14 +333,14 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Shown += new System.EventHandler(this.Form1_Shown);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,7 +355,7 @@
         private System.Windows.Forms.PictureBox albumArtBox;
         private System.Windows.Forms.Label songArtistLabel;
         private System.Windows.Forms.Label songNameLabel;
-        private System.Windows.Forms.Button lastFMBtn;
+        private System.Windows.Forms.Button FindCoverButton;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ComboBox comboBFriends;
         private System.Windows.Forms.Button changeShareTextBtn;
@@ -310,6 +368,11 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button setStatusButton;
         private System.Windows.Forms.CheckBox autoUpdCheckBox;
+        private System.Windows.Forms.Button shareBtn;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
