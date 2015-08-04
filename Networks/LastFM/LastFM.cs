@@ -45,6 +45,11 @@ namespace iTunesSVKS_2.Networks.LastFM
             return _isFound;
         }
 
+        public bool IsFound()
+        {
+            return _isFound;
+        }
+
         private void DownloadCover(string imageUrl, string pathToDownload)
         {
             WebClient webClient = new WebClient();
@@ -164,18 +169,6 @@ namespace iTunesSVKS_2.Networks.LastFM
             string tokenResult = new StreamReader(tokenResponse.GetResponseStream(), Encoding.UTF8).ReadToEnd();
 
             return tokenResult;
-
-            var o = JToken.Parse(tokenResult);
-
-
-            imageUrl = (string)o.SelectToken("track.album.image[3].#text");
-            if (string.IsNullOrEmpty(imageUrl))
-            {
-                imageUrl = (string)o.SelectToken("artist.image[4].#text");
-            }
-
-            return imageUrl;
-
         }
     }
 }

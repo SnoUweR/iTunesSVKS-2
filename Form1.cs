@@ -19,6 +19,7 @@ namespace iTunesSVKS_2
         
         INetwork sNet = new VK();
         IPlayer pl = new iTunes();
+        ICoverFinder c = new LastFM();
         ITemplateProcessor tp = new DefaultProcessor();
         private Song currentSong;
 
@@ -35,12 +36,17 @@ namespace iTunesSVKS_2
 
         private void SNetOnConnected(object sender, string username)
         {
-            List<Friend> tmpFr = sNet.GetFriends();
-
-            foreach (Friend fr in tmpFr)
+            ISharer friendsNetwork = sNet as ISharer;
+            if (friendsNetwork != null)
             {
-                comboBFriends.Items.Add(fr);
+                List<Friend> tmpFr = friendsNetwork.GetFriends();
+
+                foreach (Friend fr in tmpFr)
+                {
+                    comboBFriends.Items.Add(fr);
+                }
             }
+
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -78,14 +84,21 @@ namespace iTunesSVKS_2
 
         private void FindCoverButton_Click(object sender, EventArgs e)
         {
-            ICoverFinder c = new LastFM();
-            if (c.FindCover(new Song()
-            {
-                Artist = "Pendulum",
-                Name = "The Other Side"
-            }))
+            if (c.FindCover(currentSong))
             {
                 albumArtBox.Invoke(changeBoxImage, new object[] {albumArtBox, c.GetCoverImage()});
+            }
+        }
+
+        private void SaveCoverButton_Click(object sender, EventArgs e)
+        {
+            if (c.IsFound())
+            {
+                ICoverSetter coverSet = pl as ICoverSetter;
+                if (coverSet != null)
+                {
+                    coverSet.SetCover(c.GetImagePath());
+                }
             }
         }
     }

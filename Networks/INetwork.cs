@@ -17,10 +17,6 @@ namespace iTunesSVKS_2.Networks
 
         void Deauth();
 
-        void Share(string id, string message);
-
-        List<Friend> GetFriends();
-
         void Destroy();
 
         event ConnectedEventHandler Connected;

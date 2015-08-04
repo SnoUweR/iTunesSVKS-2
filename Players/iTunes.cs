@@ -11,7 +11,7 @@ using iTunesSVKS_2.Common;
 
 namespace iTunesSVKS_2.Players
 {
-    class iTunes : IPlayer
+    class iTunes : IPlayer, ICoverSetter
     {
         private iTunesApp app;
         private bool _isLaunched;
@@ -39,7 +39,19 @@ namespace iTunesSVKS_2.Players
             return _isLaunched;
         }
 
-       
+        public void SetCover(string coverPath)
+        {
+            // Если текущий трек уже имеет обложку, то обновляем её на новую   
+            // В противном случае, добавляем новую
+            if (app.CurrentTrack.Artwork[1] != null)
+            {
+                app.CurrentTrack.Artwork[1].SetArtworkFromFile(coverPath);
+            }
+            else
+            {
+                app.CurrentTrack.AddArtworkFromFile(coverPath);
+            }
+        }
 
         public Song GetCurrentSong()
         {
@@ -58,6 +70,7 @@ namespace iTunesSVKS_2.Players
 
         private Image GetCover()
         {
+            //втф?
             IITArtworkCollection art1 = app.CurrentTrack.Artwork;
             IITArtwork art2 = art1[1];
             if (art2 == null) return null;

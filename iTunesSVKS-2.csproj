@@ -63,6 +63,8 @@
     <Compile Include="Common\Friend.cs" />
     <Compile Include="Common\Cover.cs" />
     <Compile Include="Networks\ICoverFinder.cs" />
+    <Compile Include="Networks\ISharer.cs" />
+    <Compile Include="Players\ICoverSetter.cs" />
     <Compile Include="Networks\INetwork.cs" />
     <Compile Include="Networks\LastFM\LastFM.cs" />
     <Compile Include="Networks\LastFM\Artist.cs" />

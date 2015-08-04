@@ -10,7 +10,7 @@ using Friend = iTunesSVKS_2.Common.Friend;
 
 namespace iTunesSVKS_2.Networks
 {
-    class VK : INetwork
+    class VK : INetwork, ISharer
     {
         private bool _isLogged;
         private SessionInfo _sessionInfo;
@@ -89,9 +89,10 @@ namespace iTunesSVKS_2.Networks
             return tmpList;
         }
 
+
         public void Destroy()
         {
-            throw new NotImplementedException();
+            SetStatus(_initialStatus);
         }
 
         public event ConnectedEventHandler Connected;

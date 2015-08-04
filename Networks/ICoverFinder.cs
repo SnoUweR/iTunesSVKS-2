@@ -7,6 +7,9 @@ using iTunesSVKS_2.Common;
 
 namespace iTunesSVKS_2.Networks
 {
+    /// <summary>
+    /// Представляет интерфейс для 
+    /// </summary>
     interface ICoverFinder
     {
         bool FindCover(Song song);
@@ -14,5 +17,7 @@ namespace iTunesSVKS_2.Networks
         Image GetCoverImage();
 
         string GetImagePath();
+
+        bool IsFound();
     }
 }
