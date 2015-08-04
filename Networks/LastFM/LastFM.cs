@@ -6,32 +6,129 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using iTunesSVKS_2.Common;
 
-namespace iTunesSVKS_2.Networks
+namespace iTunesSVKS_2.Networks.LastFM
 {
     class LastFM : ICoverFinder
     {
         private const string APIKey = "e8203c02891d90390e16205aa05c1d6d";
+        private bool _isFound = false;
+        private string _imagePath;
 
-        public Image FindCover(Song song)
+        /// <summary>
+        /// Делает попытку поиска обложки на LastFM
+        /// </summary>
+        /// <param name="song">Песня, обложку которой будем искать</param>
+        /// <returns>True: Обложка найдена</returns>
+        public bool FindCover(Song song)
         {
-            ArtistGetInfo(song.Artist);
+
+            Track tmpTrack = TrackGetInfo(song.Artist, song.Name);
+            Artist tmpArtist;
+            
+            //Когда-нибудь я это отрефакторю (или кто-нибудь другой)
+
+            if (tmpTrack.Covers.Large != null)
+            {
+                _imagePath = String.Concat(Environment.CurrentDirectory, @"\TrackCover.jpg");
+                DownloadCover(tmpTrack.Covers.Large, _imagePath);
+                _isFound = true;
+            }
+            else if ((tmpArtist = ArtistGetInfo(song.Artist)) != null)
+            {
+                _imagePath = String.Concat(Environment.CurrentDirectory, @"\ArtistCover.jpg");
+                DownloadCover(tmpArtist.Covers.Large, _imagePath);
+                _isFound = true;
+            }
+
+            return _isFound;
+        }
+
+        private void DownloadCover(string imageUrl, string pathToDownload)
+        {
+            WebClient webClient = new WebClient();
+            webClient.DownloadFile(imageUrl, pathToDownload);
+        }
+
+        public Image GetCoverImage()
+        {
+            if (_isFound)
+            {
+               return Image.FromFile(_imagePath);
+            }
             return null;
         }
 
-        private void TrackGetInfo(string artist, string name)
+        public string GetImagePath()
+        {
+            if (_isFound)
+            {
+                return _imagePath;
+            }
+            return null;
+        }
+
+        // Вообще, думаю это всё нехило сломается, если API изменят
+
+        // Так как в данный момент используется только обложка, то тут небольшой избыток получаемой с API инфы
+        // В песпективе, из этого всего можно сделать аналог ластфмовского скробллера
+
+        private Track TrackGetInfo(string artist, string name)
         {
             const string method = "track.getInfo";
 
+            string resp = APIRequest(method, new Dictionary<string, string>() { { "artist", artist }, {"track", name} });
+
+            var o = JToken.Parse(resp);
+
+            Track track = new Track()
+            {
+                Id = (int)o.SelectToken("track.id"),
+                Listeners = (int)o.SelectToken("track.listeners"),
+                Name = (string)o.SelectToken("track.name"),
+                Artist = (string)o.SelectToken("track.artist.name"),
+                TopTag = (string)o.SelectToken("track.toptags.tag[0].name"),
+                Album = (string)o.SelectToken("track.album.title"),
+                Playcount = (int)o.SelectToken("track.playcount"),
+                Url = (string)o.SelectToken("track.url"),
+                Covers = new Cover.CoverSizes()
+                {
+                    Small = (string)o.SelectToken("track.album.image[0].#text"),
+                    Medium = (string)o.SelectToken("track.album.image[1].#text"),
+                    Large = (string)o.SelectToken("track.album.image[2].#text"),
+                    Extralarge = (string)o.SelectToken("artist.image[3].#text"),
+                }
+            };
+
+            return track;
         }
 
-        private void ArtistGetInfo(string artist)
+        private Artist ArtistGetInfo(string artist)
         {
             const string method = "artist.getInfo";
 
             string resp = APIRequest(method, new Dictionary<string, string>() {{"artist", artist}});
 
-            Console.WriteLine();
+            var o = JToken.Parse(resp);
+
+            Artist art = new Artist()
+            {
+                Listeners = (int)o.SelectToken("artist.stats.listeners"),
+                Name = (string)o.SelectToken("artist.name"),
+                Playcount = (int)o.SelectToken("artist.stats.playcount"),
+                Url = (string)o.SelectToken("artist.url"),
+                Covers = new Cover.CoverSizes()
+                {
+                    Small = (string)o.SelectToken("artist.image[0].#text"),
+                    Medium = (string)o.SelectToken("artist.image[1].#text"),
+                    Large = (string)o.SelectToken("artist.image[2].#text"),
+                    Extralarge = (string)o.SelectToken("artist.image[3].#text"),
+                    Mega = (string)o.SelectToken("artist.image[4].#text"),
+                }
+            };
+
+            return art;
         }
 
         /// <summary>

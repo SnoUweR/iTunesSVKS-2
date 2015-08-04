@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace iTunesSVKS_2
+namespace iTunesSVKS_2.Common
 {
     class Friend
     {

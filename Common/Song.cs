@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using iTunesLib;
 
-namespace iTunesSVKS_2
+namespace iTunesSVKS_2.Common
 {
     class Song
     {

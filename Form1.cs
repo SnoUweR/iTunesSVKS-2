@@ -10,6 +10,7 @@ using iTunesSVKS_2.Networks;
 using iTunesSVKS_2.Players;
 using iTunesSVKS_2.TemplateProcessor;
 using iTunesSVKS_2.Networks.LastFM;
+using iTunesSVKS_2.Common;
 
 namespace iTunesSVKS_2
 {
@@ -78,11 +79,14 @@ namespace iTunesSVKS_2
         private void FindCoverButton_Click(object sender, EventArgs e)
         {
             ICoverFinder c = new LastFM();
-            c.FindCover(new Song()
+            if (c.FindCover(new Song()
             {
                 Artist = "Pendulum",
                 Name = "The Other Side"
-            });
+            }))
+            {
+                albumArtBox.Invoke(changeBoxImage, new object[] {albumArtBox, c.GetCoverImage()});
+            }
         }
     }
 }

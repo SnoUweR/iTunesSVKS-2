@@ -60,16 +60,19 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Friend.cs" />
+    <Compile Include="Common\Friend.cs" />
+    <Compile Include="Common\Cover.cs" />
     <Compile Include="Networks\ICoverFinder.cs" />
     <Compile Include="Networks\INetwork.cs" />
-    <Compile Include="Networks\LastFM.cs" />
+    <Compile Include="Networks\LastFM\LastFM.cs" />
+    <Compile Include="Networks\LastFM\Artist.cs" />
+    <Compile Include="Networks\LastFM\Track.cs" />
     <Compile Include="Networks\VK.cs" />
     <Compile Include="Players\IPlayer.cs" />
     <Compile Include="Players\iTunes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Song.cs" />
+    <Compile Include="Common\Song.cs" />
     <Compile Include="TemplateProcessor\DefaultProcessor.cs" />
     <Compile Include="TemplateProcessor\ITemplateProcessor.cs" />
     <Compile Include="TemplateProcessor\TextReplacer.cs" />

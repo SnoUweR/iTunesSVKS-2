@@ -5,6 +5,8 @@ using System.Text;
 using ApiCore;
 using ApiCore.Friends;
 using ApiCore.Status;
+using iTunesSVKS_2.Common;
+using Friend = iTunesSVKS_2.Common.Friend;
 
 namespace iTunesSVKS_2.Networks
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using iTunesSVKS_2.Common;
 
 namespace iTunesSVKS_2.Networks.LastFM
 {
@@ -24,7 +25,7 @@ namespace iTunesSVKS_2.Networks.LastFM
 
         public string TopTag { get; set; }
 
-
+        public Cover.CoverSizes Covers { get; set; }
 
     }
 }
