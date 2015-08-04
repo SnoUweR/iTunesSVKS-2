@@ -23,7 +23,6 @@ namespace iTunesSVKS_2.Networks.LastFM
         /// <returns>True: Обложка найдена</returns>
         public bool FindCover(Song song)
         {
-
             Track tmpTrack = TrackGetInfo(song.Artist, song.Name);
             Artist tmpArtist;
             
@@ -78,6 +77,33 @@ namespace iTunesSVKS_2.Networks.LastFM
 
         // Так как в данный момент используется только обложка, то тут небольшой избыток получаемой с API инфы
         // В песпективе, из этого всего можно сделать аналог ластфмовского скробллера
+
+
+        /// <summary>
+        /// Возвращает объект, представляющий текущую песню, прослушиваемую пользователем.
+        /// Либо null, если ничего не слушает.
+        /// Либо вообще вылетает, ибо я не могу в тестинг
+        /// </summary>
+        /// <param name="user">Имя пользователя</param>
+        /// <returns>Текущая прослушиваемая песня, либо null - если её нет</returns>
+        private Track UserGetCurrentTrack(string user)
+        {
+            const string method = "user.getrecenttracks";
+
+            string resp = APIRequest(method, new Dictionary<string, string>() { { "user", user } });
+
+            var o = JToken.Parse(resp);
+
+            bool isAnythingPlayed = (bool)o.SelectToken("recenttracks.track[0].@attr.nowplaying");
+
+            if (isAnythingPlayed)
+            {
+                return TrackGetInfo((string)o.SelectToken("recenttracks.track[0].artist.#text"),
+                    (string)o.SelectToken("recenttracks.track[0].name"));
+            }
+
+            return null;
+        }
 
         private Track TrackGetInfo(string artist, string name)
         {
