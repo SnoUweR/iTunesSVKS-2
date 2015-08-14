@@ -9,7 +9,7 @@ namespace iTunesSVKS_2.Networks.LastFM
     class Track
     {
 
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string Name { get; set; }
 

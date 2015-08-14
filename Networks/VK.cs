@@ -24,9 +24,6 @@ namespace iTunesSVKS_2.Networks
         /// </summary>
         private string _initialStatus;
 
-
-
-
         public void Auth()
         {
             if (!_isLogged)

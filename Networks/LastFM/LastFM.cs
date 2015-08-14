@@ -115,7 +115,7 @@ namespace iTunesSVKS_2.Networks.LastFM
 
             Track track = new Track()
             {
-                Id = (int)o.SelectToken("track.id"),
+                Id = (int?)o.SelectToken("track.id"),
                 Listeners = (int)o.SelectToken("track.listeners"),
                 Name = (string)o.SelectToken("track.name"),
                 Artist = (string)o.SelectToken("track.artist.name"),

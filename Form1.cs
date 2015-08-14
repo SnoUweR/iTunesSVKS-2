@@ -18,6 +18,7 @@ namespace iTunesSVKS_2
     {
         
         INetwork sNet = new VK();
+        private INetwork sk = new Skype();
         IPlayer pl = new iTunes();
         ICoverFinder c = new LastFM();
         ITemplateProcessor tp = new DefaultProcessor();
@@ -51,13 +52,20 @@ namespace iTunesSVKS_2
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            sNet.Connected += SNetOnConnected;
+            //sNet.Connected += SNetOnConnected;
             //sNet.Auth();
             pl.SongChanged += PlOnSongChanged;
             pl.Initialize();
+
+            sk.Connected += SkOnConnected;
+            sk.Auth();
         }
 
-       
+        private void SkOnConnected(object sender, string username)
+        {
+            Console.WriteLine(sk.GetStatus());
+        }
+
 
         private void PlOnSongChanged(object sender, Song newsong)
         {
@@ -67,8 +75,8 @@ namespace iTunesSVKS_2
             songNameLabel.Invoke(changeLabelText, new object[] {songNameLabel, currentSong.Name});
             songArtistLabel.Invoke(changeLabelText, new object[] { songArtistLabel, currentSong.Artist });
             albumArtBox.Invoke(changeBoxImage, new object[] { albumArtBox, currentSong.Cover });
-
             ProcessTemplate();
+            sk.SetStatus(textBox2.Text);
 
         }
 
