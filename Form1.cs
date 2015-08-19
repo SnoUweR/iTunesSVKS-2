@@ -17,12 +17,12 @@ namespace iTunesSVKS_2
     public partial class Form1 : Form
     {
         
-        INetwork sNet = new VK();
-        private INetwork sk = new Skype();
-        IPlayer pl = new iTunes();
+        //INetwork sNet = new VK();
+        //private INetwork sk = new Skype();
+        //IPlayer pl = new iTunes();
         ICoverFinder c = new LastFM();
+        LogicManager _logic = new LogicManager();
         ITemplateProcessor tp = new DefaultProcessor();
-        private Song currentSong;
 
 
         Action<Label, string> changeLabelText = (label, s) => label.Text = s;
@@ -37,7 +37,7 @@ namespace iTunesSVKS_2
 
         private void SNetOnConnected(object sender, string username)
         {
-            ISharer friendsNetwork = sNet as ISharer;
+            ISharer friendsNetwork = _logic.GetNetworkHandler() as ISharer;
             if (friendsNetwork != null)
             {
                 List<Friend> tmpFr = friendsNetwork.GetFriends();
@@ -54,29 +54,25 @@ namespace iTunesSVKS_2
         {
             //sNet.Connected += SNetOnConnected;
             //sNet.Auth();
-            pl.SongChanged += PlOnSongChanged;
-            pl.Initialize();
-
-            sk.Connected += SkOnConnected;
-            sk.Auth();
+            _logic.SongChanged += PlOnSongChanged;
+            _logic.Connected += SkOnConnected;
+            _logic.Start();
         }
 
         private void SkOnConnected(object sender, string username)
         {
-            Console.WriteLine(sk.GetStatus());
+            Console.WriteLine(_logic.GetStatus());
         }
 
 
         private void PlOnSongChanged(object sender, Song newsong)
         {
-            currentSong = newsong;
-            Console.WriteLine("Песня изменилась на {0}", currentSong);
 
-            songNameLabel.Invoke(changeLabelText, new object[] {songNameLabel, currentSong.Name});
-            songArtistLabel.Invoke(changeLabelText, new object[] { songArtistLabel, currentSong.Artist });
-            albumArtBox.Invoke(changeBoxImage, new object[] { albumArtBox, currentSong.Cover });
+            songNameLabel.Invoke(changeLabelText, new object[] {songNameLabel, _logic.CurrentSong.Name});
+            songArtistLabel.Invoke(changeLabelText, new object[] { songArtistLabel, _logic.CurrentSong.Artist });
+            albumArtBox.Invoke(changeBoxImage, new object[] { albumArtBox, _logic.CurrentSong.Cover });
             ProcessTemplate();
-            sk.SetStatus(textBox2.Text);
+            _logic.StatusToChange = textBox2.Text;
 
         }
 
@@ -87,12 +83,13 @@ namespace iTunesSVKS_2
 
         private void ProcessTemplate()
         {
-            textBox2.Invoke(changeTextBoxText, new object[] {textBox2, tp.ProcessTemplate(customText.Text, currentSong)});
+            textBox2.Invoke(changeTextBoxText, new object[] { textBox2, tp.ProcessTemplate(customText.Text, _logic.CurrentSong) });
+            _logic.StatusToChange = textBox2.Text;
         }
 
         private void FindCoverButton_Click(object sender, EventArgs e)
         {
-            if (c.FindCover(currentSong))
+            if (c.FindCover(_logic.CurrentSong))
             {
                 albumArtBox.Invoke(changeBoxImage, new object[] {albumArtBox, c.GetCoverImage()});
             }
@@ -102,7 +99,7 @@ namespace iTunesSVKS_2
         {
             if (c.IsFound())
             {
-                ICoverSetter coverSet = pl as ICoverSetter;
+                ICoverSetter coverSet = _logic.GetPlayerHandler() as ICoverSetter;
                 if (coverSet != null)
                 {
                     coverSet.SetCover(c.GetImagePath());
@@ -113,6 +110,23 @@ namespace iTunesSVKS_2
         private void shareButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void autoUpdCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _logic.AutoScrobble = autoUpdCheckBox.Checked;
+        }
+
+        private void setStatusButton_Click(object sender, EventArgs e)
+        {
+            ProcessTemplate();
+            _logic.StatusToChange = textBox2.Text;
+            _logic.ForceUpdateStatus();
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+           _logic.Close();
         }
     }
 }

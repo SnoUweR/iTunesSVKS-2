@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.SaveCoverButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.shareBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@
             this.autoUpdCheckBox = new System.Windows.Forms.CheckBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.SaveCoverButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).BeginInit();
@@ -89,6 +89,16 @@
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Композиция";
+            // 
+            // SaveCoverButton
+            // 
+            this.SaveCoverButton.Location = new System.Drawing.Point(164, 184);
+            this.SaveCoverButton.Name = "SaveCoverButton";
+            this.SaveCoverButton.Size = new System.Drawing.Size(165, 23);
+            this.SaveCoverButton.TabIndex = 35;
+            this.SaveCoverButton.Text = "Сохранить в iTunes";
+            this.SaveCoverButton.UseVisualStyleBackColor = true;
+            this.SaveCoverButton.Click += new System.EventHandler(this.SaveCoverButton_Click);
             // 
             // button1
             // 
@@ -300,6 +310,7 @@
             this.setStatusButton.TabIndex = 4;
             this.setStatusButton.Text = "Обновить";
             this.setStatusButton.UseVisualStyleBackColor = true;
+            this.setStatusButton.Click += new System.EventHandler(this.setStatusButton_Click);
             // 
             // autoUpdCheckBox
             // 
@@ -310,6 +321,7 @@
             this.autoUpdCheckBox.TabIndex = 7;
             this.autoUpdCheckBox.Text = "Автоматически";
             this.autoUpdCheckBox.UseVisualStyleBackColor = true;
+            this.autoUpdCheckBox.CheckedChanged += new System.EventHandler(this.autoUpdCheckBox_CheckedChanged);
             // 
             // pictureBox1
             // 
@@ -323,16 +335,6 @@
             this.pictureBox1.TabIndex = 22;
             this.pictureBox1.TabStop = false;
             // 
-            // SaveCoverButton
-            // 
-            this.SaveCoverButton.Location = new System.Drawing.Point(164, 184);
-            this.SaveCoverButton.Name = "SaveCoverButton";
-            this.SaveCoverButton.Size = new System.Drawing.Size(165, 23);
-            this.SaveCoverButton.TabIndex = 35;
-            this.SaveCoverButton.Text = "Сохранить в iTunes";
-            this.SaveCoverButton.UseVisualStyleBackColor = true;
-            this.SaveCoverButton.Click += new System.EventHandler(this.SaveCoverButton_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -345,6 +347,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.groupBox1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

@@ -18,12 +18,6 @@ namespace iTunesSVKS_2.Networks
         private StatusFactory _statusFactory;
         private FriendsFactory _friendsFactory;
 
-
-        /// <summary>
-        /// Текст, который будет устанавливаться как статус после закрытия программы
-        /// </summary>
-        private string _initialStatus;
-
         public void Auth()
         {
             if (!_isLogged)
@@ -89,7 +83,7 @@ namespace iTunesSVKS_2.Networks
 
         public void Destroy()
         {
-            SetStatus(_initialStatus);
+
         }
 
         public event ConnectedEventHandler Connected;
