@@ -18,12 +18,26 @@ namespace iTunesSVKS_2
     /// </summary>
     class LogicManager
     {
+        /// <summary>
+        /// Первоначальный статус, который стоял у пользователя до работы программы
+        /// </summary>
         public string InitialStatus { get; set; }
         
+        /// <summary>
+        /// Определяет, нужно ли автоматически обновлять статус после смены композиции
+        /// </summary>
         public bool AutoScrobble { get; set; }
 
+
+        /// <summary>
+        /// Возвращает объект, который представляет текущую (или последнюю) композицию
+        /// </summary>
         public Song CurrentSong { get; private set; }
 
+        /// <summary>
+        /// Статус, который установится после обновления композиции. 
+        /// Должен содержать уже обработанные тэги!
+        /// </summary>
         public string StatusToChange { get; set; }
 
         // Я думаю, это как-то понаркомански поступаю, но пол пятого утра, так что..
@@ -38,16 +52,28 @@ namespace iTunesSVKS_2
 
         }
 
+        /// <summary>
+        /// Возвращает текущий статус в активной социальной сети
+        /// </summary>
+        /// <returns></returns>
         public string GetStatus()
         {
             return net.GetStatus();
         }
 
+        /// <summary>
+        /// Возвращает объект активной социальной сети
+        /// </summary>
+        /// <returns></returns>
         public INetwork GetNetworkHandler()
         {
             return net;
         }
 
+        /// <summary>
+        /// Возвращает объект активного плеера
+        /// </summary>
+        /// <returns></returns>
         public IPlayer GetPlayerHandler()
         {
             return player;
@@ -61,21 +87,42 @@ namespace iTunesSVKS_2
             net.SetStatus(InitialStatus);
         }
 
-        public enum NetworkOptions
+        //TODO: Реализовать проверку возможностей плеера и соц. сети
+        [Flags]
+        public enum NetworkOptionsEnum
         {
             Base = 2,
             Sharing = 4,
+            CoverFind = 8,
         }
 
-        public enum PlayerOptions
+        [Flags]
+        public enum PlayerOptionsEnum
         {
             Base = 2,
             CoverSet = 4,
         }
 
-        private void CheckOptions(INetwork network, IPlayer player)
+        public NetworkOptionsEnum NetworkOptions { get; private set; }
+        public PlayerOptionsEnum PlayerOptions { get; private set; }
+
+        /// <summary>
+        /// Проверяет, какие дополнительные функции поддерживает плеер и социальная сеть.
+        /// Возможно, это стоит делать менее захардкодерно, но пока так.
+        /// TODO: Сделать, чтоб норм было
+        /// </summary>
+        private void CheckOptions()
         {
-            
+            NetworkOptions = NetworkOptionsEnum.Base;
+            PlayerOptions = PlayerOptionsEnum.Base;
+
+            if (this.GetNetworkHandler() is ISharer) NetworkOptions |= NetworkOptionsEnum.Sharing;
+
+            //TODO: У меня пока нет классов, которые попадали бы в эту категорию
+            //Может вообще их не наследовать от нетворк, а делать как что-то отдельное?
+            if (this.GetNetworkHandler() is ICoverFinder) NetworkOptions |= NetworkOptionsEnum.CoverFind;
+
+            if (this.GetPlayerHandler() is ICoverSetter) PlayerOptions |= PlayerOptionsEnum.CoverSet;
         }
 
         public void Start()
@@ -83,6 +130,7 @@ namespace iTunesSVKS_2
             net = new Skype();
             player = new iTunes();
 
+            CheckOptions();
 
             player.SongChanged += PlayerOnSongChanged;
             net.Connected += NetOnConnected;
@@ -122,6 +170,9 @@ namespace iTunesSVKS_2
             }
         }
 
+        /// <summary>
+        /// Принудительно обновляет статус
+        /// </summary>
         public void ForceUpdateStatus()
         {
             net.SetStatus(StatusToChange);

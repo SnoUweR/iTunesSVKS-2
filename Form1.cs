@@ -35,21 +35,6 @@ namespace iTunesSVKS_2
             
         }
 
-        private void SNetOnConnected(object sender, string username)
-        {
-            ISharer friendsNetwork = _logic.GetNetworkHandler() as ISharer;
-            if (friendsNetwork != null)
-            {
-                List<Friend> tmpFr = friendsNetwork.GetFriends();
-
-                foreach (Friend fr in tmpFr)
-                {
-                    comboBFriends.Items.Add(fr);
-                }
-            }
-
-        }
-
         private void Form1_Shown(object sender, EventArgs e)
         {
             //sNet.Connected += SNetOnConnected;
@@ -62,6 +47,27 @@ namespace iTunesSVKS_2
         private void SkOnConnected(object sender, string username)
         {
             Console.WriteLine(_logic.GetStatus());
+            
+            //Ну и способ, лол. Можно было бы заюзать .net 4 с HasFlag, но вдруг кто-то 
+            //на ХР будет запускать?
+            if ((_logic.NetworkOptions & LogicManager.NetworkOptionsEnum.Sharing) != 0)
+            {
+                ISharer friendsNetwork = _logic.GetNetworkHandler() as ISharer;
+                if (friendsNetwork != null)
+                {
+                    List<Friend> tmpFr = friendsNetwork.GetFriends();
+
+                    foreach (Friend fr in tmpFr)
+                    {
+                        comboBFriends.Items.Add(fr);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Сеть не поддерживает шэринг :(");
+            }
+ 
         }
 
 
