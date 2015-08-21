@@ -84,7 +84,7 @@ namespace iTunesSVKS_2.Networks
 
         public void Destroy()
         {
-
+            throw new NotImplementedException();
         }
 
         public string GetNetworkName()

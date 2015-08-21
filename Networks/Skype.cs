@@ -42,7 +42,7 @@ namespace iTunesSVKS_2.Networks
 
         public void Deauth()
         {
-           
+            throw new NotImplementedException();
         }
 
         public void Destroy()
