@@ -14,23 +14,19 @@ namespace iTunesSVKS_2.Dialogs
         public ShareMessage()
         {
             InitializeComponent();
+        }
 
+        public string MessageToShare
+        {
+            get { return labelMessage.Text; } 
+            set { labelMessage.Text = value; }
         }
 
         private void btnPublish_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.messageToShare = labelMessage.Text;
-            Properties.Settings.Default.Save();
-            Properties.Settings.Default.Upgrade();
+            MessageToShare = labelMessage.Text;
+            this.DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void ShareMessage_Load(object sender, EventArgs e)
-        {
-            if (Properties.Settings.Default.messageToShare != null)
-            {
-                labelMessage.Text = Properties.Settings.Default.messageToShare;
-            }
         }
     }
 }

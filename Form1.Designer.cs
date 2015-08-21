@@ -33,12 +33,9 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.SaveCoverButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.shareBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.albumArtBox = new System.Windows.Forms.PictureBox();
             this.songArtistLabel = new System.Windows.Forms.Label();
             this.songNameLabel = new System.Windows.Forms.Label();
             this.FindCoverButton = new System.Windows.Forms.Button();
@@ -54,13 +51,16 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.setStatusButton = new System.Windows.Forms.Button();
             this.autoUpdCheckBox = new System.Windows.Forms.CheckBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.shareBtn = new System.Windows.Forms.Button();
+            this.albumArtBox = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,36 +100,6 @@
             this.SaveCoverButton.UseVisualStyleBackColor = true;
             this.SaveCoverButton.Click += new System.EventHandler(this.SaveCoverButton_Click);
             // 
-            // button1
-            // 
-            this.button1.BackgroundImage = global::iTunesSVKS_2.Properties.Resources.search32;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.button1.Location = new System.Drawing.Point(51, 117);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(32, 32);
-            this.button1.TabIndex = 34;
-            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolTip1.SetToolTip(this.button1, "Искать данную песню");
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // shareBtn
-            // 
-            this.shareBtn.BackgroundImage = global::iTunesSVKS_2.Properties.Resources.share32;
-            this.shareBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.shareBtn.FlatAppearance.BorderSize = 0;
-            this.shareBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.shareBtn.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
-            this.shareBtn.Location = new System.Drawing.Point(13, 117);
-            this.shareBtn.Name = "shareBtn";
-            this.shareBtn.Size = new System.Drawing.Size(32, 32);
-            this.shareBtn.TabIndex = 32;
-            this.shareBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolTip1.SetToolTip(this.shareBtn, "Поделиться песней с друзьями...");
-            this.shareBtn.UseVisualStyleBackColor = true;
-            // 
             // label2
             // 
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -156,15 +126,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(165, 165);
             this.panel1.TabIndex = 31;
-            // 
-            // albumArtBox
-            // 
-            this.albumArtBox.Location = new System.Drawing.Point(5, 5);
-            this.albumArtBox.Name = "albumArtBox";
-            this.albumArtBox.Size = new System.Drawing.Size(155, 155);
-            this.albumArtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.albumArtBox.TabIndex = 27;
-            this.albumArtBox.TabStop = false;
             // 
             // songArtistLabel
             // 
@@ -324,6 +285,45 @@
             this.autoUpdCheckBox.UseVisualStyleBackColor = true;
             this.autoUpdCheckBox.CheckedChanged += new System.EventHandler(this.autoUpdCheckBox_CheckedChanged);
             // 
+            // button1
+            // 
+            this.button1.BackgroundImage = global::iTunesSVKS_2.Properties.Resources.search32;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.button1.Location = new System.Drawing.Point(51, 117);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(32, 32);
+            this.button1.TabIndex = 34;
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolTip1.SetToolTip(this.button1, "Искать данную песню");
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // shareBtn
+            // 
+            this.shareBtn.BackgroundImage = global::iTunesSVKS_2.Properties.Resources.share32;
+            this.shareBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.shareBtn.FlatAppearance.BorderSize = 0;
+            this.shareBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.shareBtn.ImageAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.shareBtn.Location = new System.Drawing.Point(13, 117);
+            this.shareBtn.Name = "shareBtn";
+            this.shareBtn.Size = new System.Drawing.Size(32, 32);
+            this.shareBtn.TabIndex = 32;
+            this.shareBtn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolTip1.SetToolTip(this.shareBtn, "Поделиться песней с друзьями...");
+            this.shareBtn.UseVisualStyleBackColor = true;
+            // 
+            // albumArtBox
+            // 
+            this.albumArtBox.Location = new System.Drawing.Point(5, 5);
+            this.albumArtBox.Name = "albumArtBox";
+            this.albumArtBox.Size = new System.Drawing.Size(155, 155);
+            this.albumArtBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.albumArtBox.TabIndex = 27;
+            this.albumArtBox.TabStop = false;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Black;
@@ -346,17 +346,18 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.toolStrip1);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.groupBox1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.albumArtBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -119,7 +119,6 @@
             this.Name = "ShareMessage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Текст для рекомендации";
-            this.Load += new System.EventHandler(this.ShareMessage_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

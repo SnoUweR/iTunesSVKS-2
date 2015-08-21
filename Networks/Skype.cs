@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using iTunesSVKS_2.Common;
 using SKYPE4COMLib;
 
 namespace iTunesSVKS_2.Networks
 {
-    class Skype : INetwork
+    class Skype : INetwork, ISharer
     {
         private SKYPE4COMLib.Skype _skype;
 
@@ -68,6 +69,28 @@ namespace iTunesSVKS_2.Networks
         {
             var handler = Connecting;
             if (handler != null) handler(this, GetNetworkName());
+        }
+
+        public void Share(string id, string message)
+        {
+            _skype.SendMessage(id, message);
+        }
+
+        public List<Friend> GetFriends()
+        {
+            List<Friend> tmpList = new List<Friend>();
+            IEnumerable<SKYPE4COMLib.User> tmpFriends = _skype.Friends.OfType<SKYPE4COMLib.User>();
+
+            foreach (User friend in tmpFriends)
+            {
+                // В некоторых случаях, фулл нэйм пустое, а заполнять чем-то надо
+                string tmpFullname;
+                tmpFullname = String.IsNullOrEmpty(friend.FullName) ? friend.Handle : friend.FullName;
+
+                tmpList.Add(new Friend(friend.Handle, tmpFullname));
+            }
+
+            return tmpList;
         }
     }
 }

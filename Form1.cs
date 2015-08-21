@@ -37,6 +37,16 @@ namespace iTunesSVKS_2
             
         }
 
+        public string MessageToShare
+        {
+            get { return Properties.Settings.Default.messageToShare; }
+            set
+            {
+                Properties.Settings.Default.messageToShare = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         private void Form1_Shown(object sender, EventArgs e)
         {
             //sNet.Connected += SNetOnConnected;
@@ -96,8 +106,10 @@ namespace iTunesSVKS_2
 
                     foreach (Friend fr in tmpFr)
                     {
-                        comboBFriends.Items.Add(fr);
+                        BeginInvoke(new Action<Friend>((friend) => comboBFriends.Items.Add(friend)), fr);
                     }
+
+                    BeginInvoke(new Action<bool>((enabled) => shareButton.Enabled = enabled), true);
                 }
             }
             else
@@ -152,7 +164,15 @@ namespace iTunesSVKS_2
 
         private void shareButton_Click(object sender, EventArgs e)
         {
-
+            if ((_logic.NetworkOptions & LogicManager.NetworkOptionsEnum.Sharing) != 0)
+            {
+                ISharer friendsNetwork = _logic.GetNetworkHandler() as ISharer;
+                if (friendsNetwork != null)
+                {
+                    Friend selectedFriend = (Friend) comboBFriends.SelectedItem;
+                    friendsNetwork.Share(selectedFriend.Id, tp.ProcessTemplate(MessageToShare, _logic.CurrentSong));
+                }
+            }
         }
 
         private void autoUpdCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -174,8 +194,12 @@ namespace iTunesSVKS_2
 
         private void changeShareTextBtn_Click(object sender, EventArgs e)
         {
-            ShareMessage sm = new ShareMessage();
-            sm.ShowDialog(this);
+            ShareMessage sm = new ShareMessage {MessageToShare = MessageToShare};
+            if (sm.ShowDialog(this) == DialogResult.OK)
+            {
+                MessageToShare = sm.MessageToShare;
+            }
+
         }
     }
 }
