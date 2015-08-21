@@ -35,15 +35,13 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.labMessage);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(272, 107);
+            this.panel1.Size = new System.Drawing.Size(296, 131);
             this.panel1.TabIndex = 0;
             // 
             // labMessage
@@ -51,7 +49,7 @@
             this.labMessage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labMessage.Location = new System.Drawing.Point(0, 0);
             this.labMessage.Name = "labMessage";
-            this.labMessage.Size = new System.Drawing.Size(270, 105);
+            this.labMessage.Size = new System.Drawing.Size(294, 129);
             this.labMessage.TabIndex = 0;
             this.labMessage.Text = "SimpleDialogMessage";
             this.labMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
