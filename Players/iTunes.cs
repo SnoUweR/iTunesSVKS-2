@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Timers;
 using iTunesLib;
@@ -11,12 +12,13 @@ using iTunesSVKS_2.Common;
 
 namespace iTunesSVKS_2.Players
 {
-    class iTunes : IPlayer, ICoverSetter
+    class iTunes : IPlayer, ICoverSetter, IDisposable
     {
         private iTunesApp app;
         private bool _isLaunched;
         private System.Timers.Timer _checkTimer;
         private Song _previousSong;
+        private bool _disposed;
 
         public void Initialize()
         {
@@ -93,6 +95,38 @@ namespace iTunesSVKS_2.Players
             _previousSong = newsong;
             var handler = SongChanged;
             if (handler != null) handler(this, newsong);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /* Ты поехавший. Зачем юзать то, о чём толком не знаешь? */
+        //https://msdn.microsoft.com/en-us/library/fs2xkftw%28v=vs.90%29.aspx
+        protected virtual void Dispose(bool disposing)
+        {
+            // If you need thread safety, use a lock around these  
+            // operations, as well as in your methods that use the resource. 
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (_checkTimer != null)
+                        _checkTimer.Dispose();
+                    Console.WriteLine("Timer disposed.");
+
+                    if (app != null)
+                    {
+                        Marshal.FinalReleaseComObject(app);
+                    }
+                }
+
+                // Indicate that the instance has been disposed.
+                _checkTimer = null;
+                _disposed = true;
+            }
         }
     }
 }
