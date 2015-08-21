@@ -93,6 +93,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\ShareMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ShareMessage.Designer.cs">
+      <DependentUpon>ShareMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SimpleDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     <Compile Include="TemplateProcessor\DefaultProcessor.cs" />
     <Compile Include="TemplateProcessor\ITemplateProcessor.cs" />
     <Compile Include="TemplateProcessor\TextReplacer.cs" />
+    <EmbeddedResource Include="Dialogs\ShareMessage.resx">
+      <DependentUpon>ShareMessage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SimpleDialog.resx">
       <DependentUpon>SimpleDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -141,6 +150,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

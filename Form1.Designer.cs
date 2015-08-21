@@ -227,6 +227,7 @@
             this.changeShareTextBtn.TabIndex = 25;
             this.changeShareTextBtn.Text = "Изменить текст";
             this.changeShareTextBtn.UseVisualStyleBackColor = true;
+            this.changeShareTextBtn.Click += new System.EventHandler(this.changeShareTextBtn_Click);
             // 
             // albumArtCheckBox
             // 

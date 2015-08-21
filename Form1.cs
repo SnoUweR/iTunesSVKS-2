@@ -27,9 +27,9 @@ namespace iTunesSVKS_2
 
         SimpleDialog sd = new SimpleDialog();
 
-        Action<Label, string> changeLabelText = (label, s) => label.Text = s;
-        Action<TextBox, string> changeTextBoxText = (textBox, s) => textBox.Text = s;
-        Action<PictureBox, Image> changeBoxImage = (box, image) => box.Image = image;
+        readonly Action<Label, string> changeLabelText = (label, s) => label.Text = s;
+        readonly Action<TextBox, string> changeTextBoxText = (textBox, s) => textBox.Text = s;
+        readonly Action<PictureBox, Image> changeBoxImage = (box, image) => box.Image = image;
 
         public Form1()
         {
@@ -50,6 +50,11 @@ namespace iTunesSVKS_2
         private void NetworkOnConnecting(object sender, string networkName)
         {
             Console.WriteLine("Идет подключение к социальной сети.");
+
+            /* Вообще, я думаю, что подобные штуки должны проводиться где-нибудь в LogicManager,
+             * ибо архитектура, по моему замыслу, предполагает, что другие деволоперы смогут
+             * вполне легко писать свои UI, не заботясь о том, как всё внутри тут устроено.
+             */
             if (this.InvokeRequired)
             {
                 BeginInvoke(new Action<object, string>(NetworkOnConnecting), new object[]{sender, networkName});
@@ -165,6 +170,12 @@ namespace iTunesSVKS_2
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
            _logic.Close();
+        }
+
+        private void changeShareTextBtn_Click(object sender, EventArgs e)
+        {
+            ShareMessage sm = new ShareMessage();
+            sm.ShowDialog(this);
         }
     }
 }
