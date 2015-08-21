@@ -20,6 +20,7 @@ namespace iTunesSVKS_2.Networks
 
         public void Auth()
         {
+            OnConnecting();
             if (!_isLogged)
             {
                 // Соединяемся с VK API, передаем ему ключ приложения и необходимые нам разрешения
@@ -86,12 +87,24 @@ namespace iTunesSVKS_2.Networks
 
         }
 
+        public string GetNetworkName()
+        {
+            return "VK";
+        }
+
         public event ConnectedEventHandler Connected;
+        public event ConnectingEventHandler Connecting;
 
         protected virtual void OnConnected(string username)
         {
             var handler = Connected;
             if (handler != null) handler(this, username);
+        }
+
+        protected virtual void OnConnecting()
+        {
+            var handler = Connecting;
+            if (handler != null) handler(this, GetNetworkName());
         }
     }
 }

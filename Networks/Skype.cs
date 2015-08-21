@@ -12,6 +12,7 @@ namespace iTunesSVKS_2.Networks
 
         public void Auth()
         {
+            OnConnecting();
             _skype = new SKYPE4COMLib.Skype();
             _skype.Attach(5, true);
 
@@ -46,12 +47,25 @@ namespace iTunesSVKS_2.Networks
             throw new NotImplementedException();
         }
 
+        public string GetNetworkName()
+        {
+            return "Skype";
+        }
+
         public event ConnectedEventHandler Connected;
+
+        public event ConnectingEventHandler Connecting;
 
         protected virtual void OnConnected(string username)
         {
             var handler = Connected;
             if (handler != null) handler(this, username);
+        }
+
+        protected virtual void OnConnecting()
+        {
+            var handler = Connecting;
+            if (handler != null) handler(this, GetNetworkName());
         }
     }
 }

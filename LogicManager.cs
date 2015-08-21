@@ -43,6 +43,8 @@ namespace iTunesSVKS_2
         // Я думаю, это как-то понаркомански поступаю, но пол пятого утра, так что..
         public event ConnectedEventHandler Connected;
         public event SongChangedEventHandler SongChanged;
+        //А сейчас уже десять утра, так что у тебя нет оправдания для этой херни
+        public event ConnectingEventHandler Connecting;
 
         private INetwork net;
         private IPlayer player;
@@ -87,7 +89,6 @@ namespace iTunesSVKS_2
             net.SetStatus(InitialStatus);
         }
 
-        //TODO: Реализовать проверку возможностей плеера и соц. сети
         [Flags]
         public enum NetworkOptionsEnum
         {
@@ -134,6 +135,7 @@ namespace iTunesSVKS_2
 
             player.SongChanged += PlayerOnSongChanged;
             net.Connected += NetOnConnected;
+            net.Connecting += OnConnecting;
 
             net.Auth();
             player.Initialize();
@@ -149,6 +151,12 @@ namespace iTunesSVKS_2
         {
             var handler = Connected;
             if (handler != null) handler(this, username);
+        }
+
+        protected virtual void OnConnecting(object sender, string networkName)
+        {
+            var handler = Connecting;
+            if (handler != null) handler(this, networkName);
         }
 
         protected virtual void OnSongChanged(Song newsong)

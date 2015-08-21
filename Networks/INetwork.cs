@@ -19,8 +19,14 @@ namespace iTunesSVKS_2.Networks
 
         void Destroy();
 
+        string GetNetworkName();
+
         event ConnectedEventHandler Connected;
+
+        event ConnectingEventHandler Connecting;
     }
 
-     internal delegate void ConnectedEventHandler(object sender, string username);
+    internal delegate void ConnectedEventHandler(object sender, string username);
+
+    internal delegate void ConnectingEventHandler(object sender, string networkName);
 }

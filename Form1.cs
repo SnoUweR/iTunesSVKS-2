@@ -11,6 +11,7 @@ using iTunesSVKS_2.Players;
 using iTunesSVKS_2.TemplateProcessor;
 using iTunesSVKS_2.Networks.LastFM;
 using iTunesSVKS_2.Common;
+using iTunesSVKS_2.Dialogs;
 
 namespace iTunesSVKS_2
 {
@@ -24,6 +25,7 @@ namespace iTunesSVKS_2
         LogicManager _logic = new LogicManager();
         ITemplateProcessor tp = new DefaultProcessor();
 
+        SimpleDialog sd = new SimpleDialog();
 
         Action<Label, string> changeLabelText = (label, s) => label.Text = s;
         Action<TextBox, string> changeTextBoxText = (textBox, s) => textBox.Text = s;
@@ -44,10 +46,21 @@ namespace iTunesSVKS_2
             _logic.Start();
         }
 
+        private void NetworkOnConnecting(object sender, string networkName)
+        {
+            Console.WriteLine("Идет подключение к социальной сети.");
+            sd.BorderStyle = FormBorderStyle.None;
+            sd.Title = "Подключение к " + networkName;
+            sd.Message = String.Format("Ожидание ответа от социальной сети ({0})", networkName);
+            sd.ShowDialog(this);
+        }
+
         private void SkOnConnected(object sender, string username)
         {
             Console.WriteLine(_logic.GetStatus());
             
+            sd.Close();
+
             //Ну и способ, лол. Можно было бы заюзать .net 4 с HasFlag, но вдруг кто-то 
             //на ХР будет запускать?
             if ((_logic.NetworkOptions & LogicManager.NetworkOptionsEnum.Sharing) != 0)
