@@ -43,23 +43,42 @@ namespace iTunesSVKS_2
             //sNet.Auth();
             _logic.SongChanged += PlOnSongChanged;
             _logic.Connected += SkOnConnected;
+            _logic.Connecting += NetworkOnConnecting;
             _logic.Start();
         }
 
         private void NetworkOnConnecting(object sender, string networkName)
         {
             Console.WriteLine("Идет подключение к социальной сети.");
-            sd.BorderStyle = FormBorderStyle.None;
-            sd.Title = "Подключение к " + networkName;
-            sd.Message = String.Format("Ожидание ответа от социальной сети ({0})", networkName);
-            sd.ShowDialog(this);
+            if (this.InvokeRequired)
+            {
+                BeginInvoke(new Action<object, string>(NetworkOnConnecting), new object[]{sender, networkName});
+            }
+            else
+            {
+
+                sd.BorderStyle = FormBorderStyle.None;
+                sd.Title = "Подключение к " + networkName;
+                sd.Message = String.Format("Ожидание ответа от социальной сети ({0})", networkName);
+                sd.ShowDialog(this);
+            }
+
         }
 
         private void SkOnConnected(object sender, string username)
         {
             Console.WriteLine(_logic.GetStatus());
-            
-            sd.Close();
+
+            // За такое, думаю, меня побьют
+            if (this.InvokeRequired)
+            {
+                BeginInvoke(new Action(sd.Close));
+            }
+            else
+            {
+                sd.Close();
+            }
+
 
             //Ну и способ, лол. Можно было бы заюзать .net 4 с HasFlag, но вдруг кто-то 
             //на ХР будет запускать?

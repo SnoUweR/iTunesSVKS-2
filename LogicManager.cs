@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Tasks;
 using iTunesSVKS_2.Networks;
 using iTunesSVKS_2.Players;
-using iTunesSVKS_2.TemplateProcessor;
 using iTunesSVKS_2.Networks.LastFM;
 using iTunesSVKS_2.Common;
 
@@ -51,7 +50,7 @@ namespace iTunesSVKS_2
 
         public LogicManager()
         {
-
+            
         }
 
         /// <summary>
@@ -128,7 +127,10 @@ namespace iTunesSVKS_2
 
         public void Start()
         {
+            TaskFactory tf = new TaskFactory();
             net = new Skype();
+
+   
             player = new iTunes();
 
             CheckOptions();
@@ -137,7 +139,12 @@ namespace iTunesSVKS_2
             net.Connected += NetOnConnected;
             net.Connecting += OnConnecting;
 
-            net.Auth();
+            tf.StartNew(delegate
+            {
+                net.Auth();
+            });
+
+
             player.Initialize();
 
         }

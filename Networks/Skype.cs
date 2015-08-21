@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using SKYPE4COMLib;
 
 namespace iTunesSVKS_2.Networks
@@ -12,6 +13,7 @@ namespace iTunesSVKS_2.Networks
 
         public void Auth()
         {
+           // Connecting.BeginInvoke((Action)(() => OnConnecting()));
             OnConnecting();
             _skype = new SKYPE4COMLib.Skype();
             _skype.Attach(5, true);
