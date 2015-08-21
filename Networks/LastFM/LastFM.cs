@@ -28,13 +28,13 @@ namespace iTunesSVKS_2.Networks.LastFM
             
             //Когда-нибудь я это отрефакторю (или кто-нибудь другой)
 
-            if (tmpTrack.Covers.Large != null)
+            if (!String.IsNullOrEmpty(tmpTrack.Covers.Large))
             {
                 _imagePath = String.Concat(Environment.CurrentDirectory, @"\TrackCover.jpg");
                 DownloadCover(tmpTrack.Covers.Large, _imagePath);
                 _isFound = true;
             }
-            else if ((tmpArtist = ArtistGetInfo(song.Artist)) != null)
+            else if (!String.IsNullOrEmpty((tmpArtist = ArtistGetInfo(song.Artist)).Covers.Large))
             {
                 _imagePath = String.Concat(Environment.CurrentDirectory, @"\ArtistCover.jpg");
                 DownloadCover(tmpArtist.Covers.Large, _imagePath);
@@ -51,6 +51,7 @@ namespace iTunesSVKS_2.Networks.LastFM
 
         private void DownloadCover(string imageUrl, string pathToDownload)
         {
+            if (String.IsNullOrEmpty(imageUrl)) return;
             WebClient webClient = new WebClient();
             webClient.DownloadFile(imageUrl, pathToDownload);
         }
