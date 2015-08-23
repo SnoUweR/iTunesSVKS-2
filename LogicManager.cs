@@ -8,7 +8,6 @@ using iTunesSVKS_2.Players;
 using iTunesSVKS_2.Networks.LastFM;
 using iTunesSVKS_2.Common;
 
-
 namespace iTunesSVKS_2
 {
     /// <summary>
@@ -38,6 +37,15 @@ namespace iTunesSVKS_2
         /// Должен содержать уже обработанные тэги!
         /// </summary>
         public string StatusToChange { get; set; }
+
+        // В случае с VK, если это будет False, то каждый раз будет 
+        // показываться окошко, где нужно подтвердить разрешения приложения
+        // Это удобно в тех случаях, когда нужно зайти под другим юзером
+
+        /// <summary>
+        /// Нужно ли производить автоматическую авторизацию
+        /// </summary>
+        public bool AutoLogin { get; set; }
 
         // Я думаю, это как-то понаркомански поступаю, но пол пятого утра, так что..
         public event ConnectedEventHandler Connected;
@@ -128,8 +136,9 @@ namespace iTunesSVKS_2
         public void Start()
         {
             TaskFactory tf = new TaskFactory();
-            net = new Skype();
+            net = new VK();
 
+            AutoLogin = false;
    
             player = new iTunes();
 
@@ -139,11 +148,12 @@ namespace iTunesSVKS_2
             net.Connected += NetOnConnected;
             net.Connecting += OnConnecting;
 
-            tf.StartNew(delegate
-            {
-                net.Auth();
-            });
-
+            //tf.StartNew(delegate
+            //{
+            //    net.Auth();
+            //});
+            if (!AutoLogin) net.Deauth();
+            net.Auth();
 
             player.Initialize();
 

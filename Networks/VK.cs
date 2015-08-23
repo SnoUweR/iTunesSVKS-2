@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ApiCore;
+using ApiCore.Audio;
 using ApiCore.Friends;
+using ApiCore.Messages;
 using ApiCore.Status;
 using iTunesSVKS_2.Common;
 using Friend = iTunesSVKS_2.Common.Friend;
@@ -13,19 +15,32 @@ namespace iTunesSVKS_2.Networks
     class VK : INetwork, ISharer
     {
         private bool _isLogged;
+        private SessionManager _sessionManager;
         private SessionInfo _sessionInfo;
         private ApiManager _manager;
         private StatusFactory _statusFactory;
         private FriendsFactory _friendsFactory;
+        private AudioFactory _audioFactory;
+        private MessagesFactory _messagesFactory;
+
+        private bool _needRelogin;
 
         public void Auth()
         {
-            OnConnecting();
+             _sessionManager = new SessionManager(2369574, "status,wall,photos,audio,messages");
+            if (_needRelogin)
+            {
+                _sessionManager.ReLogin();
+                _isLogged = false;
+                _needRelogin = false;
+            }
+            //OnConnecting();
             if (!_isLogged)
             {
+
                 // Соединяемся с VK API, передаем ему ключ приложения и необходимые нам разрешения
-                var sm = new SessionManager(2369574, "status,wall,photos,audio");
-                _sessionInfo = sm.GetOAuthSession();
+               
+                _sessionInfo = _sessionManager.GetOAuthSession();
                 if (_sessionInfo != null)
                 {
                     _isLogged = true;
@@ -39,6 +54,8 @@ namespace iTunesSVKS_2.Networks
                 _manager = new ApiManager(_sessionInfo) { Timeout = 10000 };
                 _statusFactory = new StatusFactory(_manager);
                 _friendsFactory = new FriendsFactory(_manager);
+                _audioFactory = new AudioFactory(_manager);
+                _messagesFactory = new MessagesFactory(_manager);
                 OnConnected(_sessionInfo.UserId.ToString());
             }
         }
@@ -60,12 +77,16 @@ namespace iTunesSVKS_2.Networks
 
         public void Deauth()
         {
-            throw new NotImplementedException();
+            _needRelogin = true;
+            // Эта штука тянется еще с первой версии. Неужели нет лучшего способа?
+            //_sessionManager.ReLogin();
+            //_isLogged = false;
+            Auth();
         }
 
         public void Share(string id, string message)
         {
-            throw new NotImplementedException();
+            _messagesFactory.Send(Convert.ToInt32(id), message, "", SendMessageType.FromChat);
         }
 
         public List<Friend> GetFriends()
@@ -81,6 +102,16 @@ namespace iTunesSVKS_2.Networks
             return tmpList;
         }
 
+        public void SetBroadcast(AudioEntry audio)
+        {
+            _audioFactory.SetBroadcast(String.Format("{0}_{1}", audio.OwnerId, audio.Id));
+        }
+
+        public AudioEntry SearchAudio(Song song)
+        {
+            return _audioFactory.Search(String.Format("{0} {1}", song.Artist, song.Name), AudioSortOrder.ByPopularity,
+                false, 1, 0, false).First();
+        }
 
         public void Destroy()
         {
