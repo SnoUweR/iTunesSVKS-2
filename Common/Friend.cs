@@ -5,7 +5,7 @@ using System.Text;
 
 namespace iTunesSVKS_2.Common
 {
-    class Friend
+    class Friend : IComparable<Friend>
     {
         public string Id { get; private set; }
         
@@ -17,6 +17,11 @@ namespace iTunesSVKS_2.Common
             Username = username;
         }
 
+
+        public int CompareTo(Friend other)
+        {
+            return String.CompareOrdinal(Username, other.Username);
+        }
 
         public override string ToString()
         {

@@ -104,6 +104,9 @@ namespace iTunesSVKS_2
                 {
                     List<Friend> tmpFr = friendsNetwork.GetFriends();
 
+                    // Может стоит вынести прям в класс?
+                    tmpFr.Sort();
+
                     foreach (Friend fr in tmpFr)
                     {
                         BeginInvoke(new Action<Friend>((friend) => comboBFriends.Items.Add(friend)), fr);
