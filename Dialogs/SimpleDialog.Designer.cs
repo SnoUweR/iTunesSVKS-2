@@ -64,7 +64,6 @@
             this.Name = "SimpleDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SimpleDialog";
-            this.TopMost = true;
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
