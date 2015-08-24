@@ -110,8 +110,10 @@
     </Compile>
     <Compile Include="Common\Friend.cs" />
     <Compile Include="Common\Cover.cs" />
+    <Compile Include="Helpers\EnumExtensions.cs" />
     <Compile Include="LogicManager.cs" />
     <Compile Include="Networks\ICoverFinder.cs" />
+    <Compile Include="Networks\ICoverUploader.cs" />
     <Compile Include="Networks\ISharer.cs" />
     <Compile Include="Networks\Skype.cs" />
     <Compile Include="Players\ICoverSetter.cs" />

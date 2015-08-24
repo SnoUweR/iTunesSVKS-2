@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -12,6 +14,7 @@ using iTunesSVKS_2.TemplateProcessor;
 using iTunesSVKS_2.Networks.LastFM;
 using iTunesSVKS_2.Common;
 using iTunesSVKS_2.Dialogs;
+using iTunesSVKS_2.Helpers;
 
 namespace iTunesSVKS_2
 {
@@ -30,6 +33,9 @@ namespace iTunesSVKS_2
         readonly Action<Label, string> changeLabelText = (label, s) => label.Text = s;
         readonly Action<TextBox, string> changeTextBoxText = (textBox, s) => textBox.Text = s;
         readonly Action<PictureBox, Image> changeBoxImage = (box, image) => box.Image = image;
+
+        private static readonly string COVER_SAVE_PATH = Path.GetDirectoryName(Application.ExecutablePath) + "\\temp\\";
+        private static readonly string COVER_SAVE_FILENAME = "coverup.bmp";
 
         public Form1()
         {
@@ -55,6 +61,8 @@ namespace iTunesSVKS_2
             _logic.Connected += SkOnConnected;
             _logic.Connecting += NetworkOnConnecting;
             _logic.Start();
+
+            Directory.CreateDirectory(COVER_SAVE_PATH);
         }
 
         private void NetworkOnConnecting(object sender, string networkName)
@@ -83,6 +91,7 @@ namespace iTunesSVKS_2
         private void SkOnConnected(object sender, string username)
         {
             Console.WriteLine(_logic.GetStatus());
+            comboBFriends.Items.Clear();
 
             // За такое, думаю, меня побьют
             if (this.InvokeRequired)
@@ -102,6 +111,7 @@ namespace iTunesSVKS_2
                 ISharer friendsNetwork = _logic.GetNetworkHandler() as ISharer;
                 if (friendsNetwork != null)
                 {
+                    
                     List<Friend> tmpFr = friendsNetwork.GetFriends();
 
                     // Может стоит вынести прям в класс?
@@ -117,6 +127,10 @@ namespace iTunesSVKS_2
             }
             else
             {
+                //foreach (Control cl in grBoxSharing.Controls)
+                //{
+                //    cl.Enabled = false;
+                //}
                 Console.WriteLine("Сеть не поддерживает шэринг :(");
             }
  
@@ -167,8 +181,18 @@ namespace iTunesSVKS_2
 
         private void shareButton_Click(object sender, EventArgs e)
         {
-            if ((_logic.NetworkOptions & LogicManager.NetworkOptionsEnum.Sharing) != 0)
+            if ((_logic.NetworkOptions.IsFlagSet(LogicManager.NetworkOptionsEnum.Sharing)))
             {
+                if (albumArtCheckBox.Checked)
+                {
+                    using (Stream stream = new FileStream(COVER_SAVE_PATH + COVER_SAVE_FILENAME, FileMode.Create))
+                    {
+                        albumArtBox.Image.Save(stream, ImageFormat.Bmp);
+                    }
+
+                    ((ICoverUploader)_logic.GetNetworkHandler()).CoverPath = COVER_SAVE_PATH + COVER_SAVE_FILENAME;
+                }
+
                 ISharer friendsNetwork = _logic.GetNetworkHandler() as ISharer;
                 if (friendsNetwork != null)
                 {
@@ -203,6 +227,14 @@ namespace iTunesSVKS_2
                 MessageToShare = sm.MessageToShare;
             }
 
+        }
+
+        private void albumArtCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((_logic.NetworkOptions & LogicManager.NetworkOptionsEnum.CoverUpload) != 0)
+            {
+                ((ICoverUploader) _logic.GetNetworkHandler()).UploadCover = albumArtCheckBox.Checked;
+            }
         }
     }
 }

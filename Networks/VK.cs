@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using ApiCore;
+using ApiCore.AttachmentTypes;
 using ApiCore.Audio;
 using ApiCore.Friends;
 using ApiCore.Messages;
+using ApiCore.Photos;
 using ApiCore.Status;
+using ApiCore.Wall;
 using iTunesSVKS_2.Common;
+using Newtonsoft.Json.Linq;
 using Friend = iTunesSVKS_2.Common.Friend;
 
 namespace iTunesSVKS_2.Networks
 {
-    class VK : INetwork, ISharer
+    class VK : INetwork, ISharer, ICoverUploader
     {
         private bool _isLogged;
         private SessionManager _sessionManager;
@@ -22,11 +27,26 @@ namespace iTunesSVKS_2.Networks
         private FriendsFactory _friendsFactory;
         private AudioFactory _audioFactory;
         private MessagesFactory _messagesFactory;
+        private PhotosFactory _photosFactory;
+        private WallFactory _wallFactory;
 
         private bool _needRelogin;
 
+        public enum ShareDestinations
+        {
+            Messages, 
+            Wall
+        }
+
+        public ShareDestinations ShareDestionation { get; set; }
+
+        public bool UploadCover { get; set; }
+
+        public string CoverPath { get; set; }
+
         public void Auth()
         {
+            ShareDestionation = ShareDestinations.Messages;
              _sessionManager = new SessionManager(2369574, "status,wall,photos,audio,messages");
             if (_needRelogin)
             {
@@ -56,6 +76,8 @@ namespace iTunesSVKS_2.Networks
                 _friendsFactory = new FriendsFactory(_manager);
                 _audioFactory = new AudioFactory(_manager);
                 _messagesFactory = new MessagesFactory(_manager);
+                _photosFactory = new PhotosFactory(_manager);
+                _wallFactory = new WallFactory(_manager);
                 OnConnected(_sessionInfo.UserId.ToString());
             }
         }
@@ -86,7 +108,55 @@ namespace iTunesSVKS_2.Networks
 
         public void Share(string id, string message)
         {
-            _messagesFactory.Send(Convert.ToInt32(id), message, "", SendMessageType.FromChat);
+            //TODO: Тут несколько раз повторяются похожие действие. Может удастся потом как-нибудь отрефакторить?
+            PhotoEntryFull photoEntry = null;
+            if (UploadCover)
+            {
+                PhotoUploadedInfo uploadResp = UploadPhoto(_sessionInfo.UserId, CoverPath);
+                photoEntry = _photosFactory.SaveWallPhoto(uploadResp, null, null);
+            }
+            if (ShareDestionation == ShareDestinations.Messages)
+            {
+                if (UploadCover && photoEntry != null)
+                {
+                    _messagesFactory.Send(Convert.ToInt32(id), message, "",
+                        new MessageAttachment[]
+                        {new MessageAttachment(AttachmentType.Photo, photoEntry.OwnerId, photoEntry.Id)});
+
+                }
+                else
+                {
+                    _messagesFactory.Send(Convert.ToInt32(id), message, "", SendMessageType.FromChat);
+                }
+            }
+            else if (ShareDestionation == ShareDestinations.Wall)
+            {
+                if (UploadCover && photoEntry != null)
+                {
+                    _wallFactory.Post(Convert.ToInt32(id), message,
+                        new MessageAttachment[]
+                        {new MessageAttachment(AttachmentType.Photo, photoEntry.OwnerId, photoEntry.Id)});
+
+                }
+                else
+                {
+                    _wallFactory.Post(Convert.ToInt32(id), message);
+                }
+            }
+
+        }
+
+        private PhotoUploadedInfo UploadPhoto(int userId, string photoPath)
+        {
+            HttpUploaderFactory uf = new HttpUploaderFactory();
+            NameValueCollection files = new NameValueCollection();
+
+            string uploadUrl = _photosFactory.GetWallUploadServer(userId, null);
+            files.Add("photo", photoPath);
+
+            PhotoUploadedInfo ui = new PhotoUploadedInfo(uf.Upload(uploadUrl, null, files));
+
+            return ui;
         }
 
         public List<Friend> GetFriends()

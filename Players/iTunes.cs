@@ -78,9 +78,16 @@ namespace iTunesSVKS_2.Players
             if (art2 == null) return null;
             art2.SaveArtworkToFile(String.Concat(Environment.CurrentDirectory, @"\Cover.jpg"));
             Stream r = File.Open(String.Concat(Environment.CurrentDirectory, @"\Cover.jpg"), FileMode.Open);
-            Image temp = Image.FromStream(r);
+
+            // В общем, суть в том, что я отвязываю изображение от потока, создавая его копию через Graphics
+            Image streamedImage = Image.FromStream(r);
+            Image clonedImage = new Bitmap(streamedImage.Width, streamedImage.Height);
+            Graphics g = Graphics.FromImage(clonedImage);
+            g.DrawImage(streamedImage, new Rectangle(0, 0, streamedImage.Width, streamedImage.Height),
+                new Rectangle(0, 0, clonedImage.Width, clonedImage.Height),
+                GraphicsUnit.Pixel);
             r.Close();
-            return temp;
+            return clonedImage;
         }
 
         public void Destroy()

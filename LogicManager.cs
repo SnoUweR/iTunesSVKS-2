@@ -102,6 +102,7 @@ namespace iTunesSVKS_2
             Base = 2,
             Sharing = 4,
             CoverFind = 8,
+            CoverUpload = 16,
         }
 
         [Flags]
@@ -129,6 +130,8 @@ namespace iTunesSVKS_2
             //TODO: У меня пока нет классов, которые попадали бы в эту категорию
             //Может вообще их не наследовать от нетворк, а делать как что-то отдельное?
             if (this.GetNetworkHandler() is ICoverFinder) NetworkOptions |= NetworkOptionsEnum.CoverFind;
+
+            if (this.GetNetworkHandler() is ICoverUploader) NetworkOptions |= NetworkOptionsEnum.CoverUpload;
 
             if (this.GetPlayerHandler() is ICoverSetter) PlayerOptions |= PlayerOptionsEnum.CoverSet;
         }
@@ -161,6 +164,7 @@ namespace iTunesSVKS_2
 
         private void NetOnConnected(object sender, string username)
         {
+            InitialStatus = GetStatus();
             OnConnected(username);
         }
 
