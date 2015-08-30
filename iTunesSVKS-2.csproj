@@ -127,6 +127,19 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\Song.cs" />
+    <Compile Include="SettingsControls\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsControls\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsControls\TabToListView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SettingsControls\TabToListView.Designer.cs">
+      <DependentUpon>TabToListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Singleton.cs" />
     <Compile Include="TemplateProcessor\DefaultProcessor.cs" />
     <Compile Include="TemplateProcessor\ITemplateProcessor.cs" />
     <Compile Include="TemplateProcessor\TextReplacer.cs" />
@@ -149,8 +162,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SettingsControls\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\iTunesSVKS_2.Networks.INetwork.datasource" />
+    <None Include="Properties\DataSources\iTunesSVKS_2.Players.IPlayer.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -195,6 +213,30 @@
       <Project>{6885b1cf-b02d-4ab0-9f5c-a3ee4974655c}</Project>
       <Name>ApiCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Some Resources\playerIconOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Some Resources\networkIconOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Some Resources\networkIconOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Some Resources\playerIconOff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Some Resources\socialIcons\vk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Some Resources\socialIcons\lastfm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Some Resources\socialIcons\skype.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Some Resources\socialIcons\itunes.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

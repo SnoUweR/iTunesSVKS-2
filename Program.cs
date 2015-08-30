@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using iTunesSVKS_2.SettingsControls;
 
 namespace iTunesSVKS_2
 {
@@ -17,7 +18,8 @@ namespace iTunesSVKS_2
             mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new SettingsForm());
+           // Application.Run(new Form1());
         }
 
         public static bool IsMainThread

@@ -117,38 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="share" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\share.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="share32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\share32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="search32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\search32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="itunes" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\socialIcons\itunes.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="lastfm" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\socialIcons\lastfm.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="networkIconOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\networkIconOff.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="networkIconOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\networkIconOn.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="playerIconOff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\playerIconOff.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="playerIconOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\playerIconOn.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="skype" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\socialIcons\skype.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="vk" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Some Resources\socialIcons\vk.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
+  <metadata name="iPlayerBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>
