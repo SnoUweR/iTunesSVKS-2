@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using ApiCore;
 using ApiCore.AttachmentTypes;
 using ApiCore.Audio;
@@ -46,6 +47,17 @@ namespace iTunesSVKS_2.Networks
 
         public void Auth()
         {
+            //чтобы форма с авторизацией не фризила поток, а продолжала свою работу сразу после эвента
+            //https://stackoverflow.com/questions/1916095/how-do-i-make-an-eventhandler-run-asynchronously
+            //Task.Factory.FromAsync(
+            //    (asyncCallback, @object) =>
+            //    {
+            //        var onConnecting = this.Connecting;
+            //        return onConnecting != null ? onConnecting.BeginInvoke(this, GetNetworkName(), asyncCallback, @object) : null;
+            //    },
+            //    this.Connecting.EndInvoke, null);
+
+            OnConnecting();
             ShareDestionation = ShareDestinations.Messages;
              _sessionManager = new SessionManager(2369574, "status,wall,photos,audio,messages");
             if (_needRelogin)
@@ -54,13 +66,13 @@ namespace iTunesSVKS_2.Networks
                 _isLogged = false;
                 _needRelogin = false;
             }
-            //OnConnecting();
             if (!_isLogged)
             {
 
                 // Соединяемся с VK API, передаем ему ключ приложения и необходимые нам разрешения
                
                 _sessionInfo = _sessionManager.GetOAuthSession();
+
                 if (_sessionInfo != null)
                 {
                     _isLogged = true;
@@ -103,7 +115,7 @@ namespace iTunesSVKS_2.Networks
             // Эта штука тянется еще с первой версии. Неужели нет лучшего способа?
             //_sessionManager.ReLogin();
             //_isLogged = false;
-            Auth();
+            //Auth();
         }
 
         public void Share(string id, string message)

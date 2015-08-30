@@ -25,7 +25,7 @@ namespace iTunesSVKS_2
         //private INetwork sk = new Skype();
         //IPlayer pl = new iTunes();
         ICoverFinder c = new LastFM();
-        LogicManager _logic = new LogicManager();
+        LogicManager _logic = LogicManager.Instance;
         ITemplateProcessor tp = new DefaultProcessor();
 
         SimpleDialog sd = new SimpleDialog();
@@ -75,15 +75,21 @@ namespace iTunesSVKS_2
              */
             if (this.InvokeRequired)
             {
-                BeginInvoke(new Action<object, string>(NetworkOnConnecting), new object[]{sender, networkName});
+
+                EndInvoke(BeginInvoke(new Action<object, string>(NetworkOnConnecting),
+                    new object[] {sender, networkName}));
             }
             else
             {
-
+                // ибо onConnecting может вызываться два раза подряд без onConnected
+                if (sd.Visible)
+                {
+                    return;
+                }
                 sd.BorderStyle = FormBorderStyle.None;
                 sd.Title = "Подключение к " + networkName;
                 sd.Message = String.Format("Ожидание ответа от социальной сети ({0})", networkName);
-                sd.ShowDialog(this);
+                sd.Show(this);
             }
 
         }
