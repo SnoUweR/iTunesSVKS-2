@@ -14,7 +14,7 @@ namespace iTunesSVKS_2
     /// Данный класс, наверное, в будущем будет реализовывать
     /// всю логику вида ПЛЕЕР <=> СОЦ. СЕТЬ
     /// </summary>
-    class LogicManager
+    class LogicManager : Singleton<LogicManager>
     {
         /// <summary>
         /// Первоначальный статус, который стоял у пользователя до работы программы
@@ -56,9 +56,38 @@ namespace iTunesSVKS_2
         private INetwork net;
         private IPlayer player;
 
-        public LogicManager()
+        /// <summary>
+        /// Данный список содержит все реализованные на данный момент транспорты соц. сетей и плееров
+        /// </summary>
+        public static List<Type> Transports;
+
+        /// <summary>
+        /// Производит поиск типов классов, которые содержат в себе определенный интерфейс
+        /// </summary>
+        /// <param name="typeToFind">Интерфейс, который должны содержать типы классов</param>
+        /// <returns></returns>
+        private static IEnumerable<Type> GetTypes(Type typeToFind)
         {
-            
+            return AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(t => t.GetInterfaces().Contains(typeToFind));
+        }
+
+        private LogicManager()
+        {
+            FillTransports();
+        }
+
+        /// <summary>
+        /// Заполняет лист с транспортами реализованными классами
+        /// </summary>
+        private void FillTransports()
+        {
+            Transports = new List<Type>();
+            List<Type> networkTypes = GetTypes(typeof (INetwork)).ToList();
+            List<Type> playerTypes = GetTypes(typeof(IPlayer)).ToList();
+
+            Transports = networkTypes.Concat(playerTypes).ToList();
         }
 
         /// <summary>
@@ -114,6 +143,7 @@ namespace iTunesSVKS_2
 
         public NetworkOptionsEnum NetworkOptions { get; private set; }
         public PlayerOptionsEnum PlayerOptions { get; private set; }
+
 
         /// <summary>
         /// Проверяет, какие дополнительные функции поддерживает плеер и социальная сеть.

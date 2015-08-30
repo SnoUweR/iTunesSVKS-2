@@ -52,8 +52,11 @@ namespace iTunesSVKS_2.Networks.LastFM
         private void DownloadCover(string imageUrl, string pathToDownload)
         {
             if (String.IsNullOrEmpty(imageUrl)) return;
-            WebClient webClient = new WebClient();
-            webClient.DownloadFile(imageUrl, pathToDownload);
+
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.DownloadFile(imageUrl, pathToDownload);
+            }
         }
 
         public Image GetCoverImage()
