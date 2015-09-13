@@ -18,8 +18,8 @@ namespace iTunesSVKS_2
             mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SettingsForm());
-           // Application.Run(new Form1());
+            //Application.Run(new SettingsForm());
+            Application.Run(new Form1());
         }
 
         public static bool IsMainThread

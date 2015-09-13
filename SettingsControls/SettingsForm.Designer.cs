@@ -28,20 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.lvObjects = new System.Windows.Forms.ListView();
             this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnNetwork = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnPlayer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.iPlayerBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.iPlayerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // lvObjects
             // 
+            this.lvObjects.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lvObjects.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnName,
             this.columnNetwork,
@@ -49,11 +48,11 @@
             this.lvObjects.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvObjects.FullRowSelect = true;
             this.lvObjects.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.lvObjects.Location = new System.Drawing.Point(0, 0);
+            this.lvObjects.Location = new System.Drawing.Point(0, 35);
             this.lvObjects.MultiSelect = false;
             this.lvObjects.Name = "lvObjects";
             this.lvObjects.OwnerDraw = true;
-            this.lvObjects.Size = new System.Drawing.Size(186, 346);
+            this.lvObjects.Size = new System.Drawing.Size(186, 311);
             this.lvObjects.TabIndex = 0;
             this.lvObjects.UseCompatibleStateImageBehavior = false;
             this.lvObjects.View = System.Windows.Forms.View.Details;
@@ -83,6 +82,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.lvObjects);
+            this.splitContainer1.Panel1.Controls.Add(this.label1);
             // 
             // splitContainer1.Panel2
             // 
@@ -91,9 +91,15 @@
             this.splitContainer1.SplitterDistance = 186;
             this.splitContainer1.TabIndex = 1;
             // 
-            // iPlayerBindingSource
+            // label1
             // 
-            this.iPlayerBindingSource.DataSource = typeof(iTunesSVKS_2.Players.IPlayer);
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(186, 35);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Выберите транспорт, ";
             // 
             // SettingsForm
             // 
@@ -106,7 +112,6 @@
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.iPlayerBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -117,8 +122,8 @@
         private System.Windows.Forms.ColumnHeader columnName;
         private System.Windows.Forms.ColumnHeader columnNetwork;
         private System.Windows.Forms.ColumnHeader columnPlayer;
-        private System.Windows.Forms.BindingSource iPlayerBindingSource;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Label label1;
 
     }
 }

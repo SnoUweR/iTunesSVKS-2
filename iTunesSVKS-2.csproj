@@ -115,6 +115,7 @@
     <Compile Include="Networks\ICoverFinder.cs" />
     <Compile Include="Networks\ICoverUploader.cs" />
     <Compile Include="Networks\ISharer.cs" />
+    <Compile Include="Networks\LastFM\Album.cs" />
     <Compile Include="Networks\Skype.cs" />
     <Compile Include="Players\ICoverSetter.cs" />
     <Compile Include="Networks\INetwork.cs" />
@@ -132,12 +133,6 @@
     </Compile>
     <Compile Include="SettingsControls\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SettingsControls\TabToListView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SettingsControls\TabToListView.Designer.cs">
-      <DependentUpon>TabToListView.cs</DependentUpon>
     </Compile>
     <Compile Include="Singleton.cs" />
     <Compile Include="TemplateProcessor\DefaultProcessor.cs" />

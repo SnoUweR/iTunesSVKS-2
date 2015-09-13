@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,21 @@ namespace iTunesSVKS_2.Networks.LastFM
         private bool _isFound = false;
         private string _imagePath;
 
+
+        /// <summary>
+        /// Типы обложек
+        /// </summary>
+        public enum CoverTypes
+        {
+            None,
+            Track,
+            Album,
+            Artist,
+        }
+
+        [DefaultValue(CoverTypes.None)]
+        public CoverTypes FoundCoverType { get; private set; }
+
         /// <summary>
         /// Делает попытку поиска обложки на LastFM
         /// </summary>
@@ -23,32 +39,51 @@ namespace iTunesSVKS_2.Networks.LastFM
         /// <returns>True: Обложка найдена</returns>
         public bool FindCover(Song song)
         {
-            Track tmpTrack = TrackGetInfo(song.Artist, song.Name);
-            Artist tmpArtist;
-            
+            FoundCoverType = CoverTypes.None;
+            Cover.CoverSizes covers = new Cover.CoverSizes();
+
             //Когда-нибудь я это отрефакторю (или кто-нибудь другой)
 
-            if (!String.IsNullOrEmpty(tmpTrack.Covers.Large))
+            // Получаем инфу о треке, от самой специфичной (для композиции) до самой обобщенной (для артиста)
+            // и как только инфа содержит нужную по размерам обложку — прекращаем поиск
+            if (!String.IsNullOrEmpty((covers = TrackGetInfo(song.Artist, song.Name).Covers).Large))
             {
-                _imagePath = String.Concat(Environment.CurrentDirectory, @"\TrackCover.jpg");
-                DownloadCover(tmpTrack.Covers.Large, _imagePath);
-                _isFound = true;
+                FoundCoverType = CoverTypes.Track;
             }
-            else if (!String.IsNullOrEmpty((tmpArtist = ArtistGetInfo(song.Artist)).Covers.Large))
+            else if (!String.IsNullOrEmpty((covers = AlbumGetInfo(song.Artist, song.Album).Covers).Large))
             {
-                _imagePath = String.Concat(Environment.CurrentDirectory, @"\ArtistCover.jpg");
-                DownloadCover(tmpArtist.Covers.Large, _imagePath);
+                FoundCoverType = CoverTypes.Album;
+            }
+            else if (!String.IsNullOrEmpty((covers = ArtistGetInfo(song.Artist).Covers).Large))
+            {
+                FoundCoverType = CoverTypes.Artist;
+            }
+
+            // если нашли хоть одну обложку, то скачиваем и изменяем соответсвующую переменную
+            if (FoundCoverType != CoverTypes.None)
+            {
+                DownloadCover(covers.Large, GetPathFromCoverType(FoundCoverType));
                 _isFound = true;
             }
 
             return _isFound;
         }
 
+        /// <summary>
+        /// Возвращает True, если обложка была найдена
+        /// </summary>
+        /// <returns>True: Обложка найдена, False: Обложка не найдена</returns>
         public bool IsFound()
         {
             return _isFound;
         }
 
+
+        /// <summary>
+        /// Скачивает обложку по указанному Url в указанную папку
+        /// </summary>
+        /// <param name="imageUrl">Адрес обложки</param>
+        /// <param name="pathToDownload">Путь для сохранения обложки, включая название файла</param>
         private void DownloadCover(string imageUrl, string pathToDownload)
         {
             if (String.IsNullOrEmpty(imageUrl)) return;
@@ -57,6 +92,20 @@ namespace iTunesSVKS_2.Networks.LastFM
             {
                 webClient.DownloadFile(imageUrl, pathToDownload);
             }
+
+            _imagePath = pathToDownload;
+        }
+
+
+        /// <summary>
+        /// Возвращает сгенерированный путь для сохранения обложки, в зависимости от
+        /// её типа
+        /// </summary>
+        /// <param name="coverType">Тип обложки</param>
+        /// <returns>Путь для сохранения</returns>
+        private string GetPathFromCoverType(CoverTypes coverType)
+        {
+            return String.Concat(Environment.CurrentDirectory, String.Format(@"\{0}Cover.jpg", coverType.ToString()));
         }
 
         public Image GetCoverImage()
@@ -81,6 +130,8 @@ namespace iTunesSVKS_2.Networks.LastFM
 
         // Так как в данный момент используется только обложка, то тут небольшой избыток получаемой с API инфы
         // В песпективе, из этого всего можно сделать аналог ластфмовского скробллера
+
+        //13.09.15: Ай-яй-яй, Влад, прочитал же в книжке, что избыточность — зло.
 
 
         /// <summary>
@@ -137,6 +188,31 @@ namespace iTunesSVKS_2.Networks.LastFM
             };
 
             return track;
+        }
+
+        private Album AlbumGetInfo(string artist, string album)
+        {
+            const string method = "album.getInfo";
+
+            string resp = APIRequest(method, new Dictionary<string, string>() {{"artist", artist}, {"album", album}});
+
+            var o = JToken.Parse(resp);
+
+            Album art = new Album()
+            {
+                Id = (int?)o.SelectToken("track.id"),
+                Artist = (string)o.SelectToken("album.artist"),
+                Name = (string)o.SelectToken("album.name"),
+                Url = (string)o.SelectToken("album.url"),
+                Covers = new Cover.CoverSizes()
+                {
+                    Small = (string)o.SelectToken("album.image[0].#text"),
+                    Medium = (string)o.SelectToken("album.image[1].#text"),
+                    Large = (string)o.SelectToken("album.image[2].#text"),
+                }
+            };
+
+            return art;
         }
 
         private Artist ArtistGetInfo(string artist)
